@@ -1,0 +1,89 @@
+import React, { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from '@/components/ui/dialog'
+
+const ContactForm = () => (
+    <form className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+            <div>
+                <input
+                    type="text"
+                    placeholder="First name*"
+                    className="w-full p-2 rounded border border-gray-300"
+                />
+            </div>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Last name*"
+                    className="w-full p-2 rounded border border-gray-300"
+                />
+            </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+            <div>
+                <input
+                    type="email"
+                    placeholder="Email*"
+                    className="w-full p-2 rounded border border-gray-300"
+                />
+            </div>
+            <div>
+                <input
+                    type="tel"
+                    placeholder="Phone*"
+                    className="w-full p-2 rounded border border-gray-300"
+                />
+            </div>
+        </div>
+        <div>
+            <input
+                type="text"
+                placeholder="Zip code*"
+                className="w-full p-2 rounded border border-gray-300"
+            />
+        </div>
+        <Button type="submit" className="w-full bg-red-700 hover:bg-red-800">
+            Submit
+        </Button>
+    </form>
+)
+
+const ContactBanner = () => {
+    return (
+        <div className="bg-white py-8 px-4 md:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="bg-zinc-800 rounded-lg text-white p-8 text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                        Contact Us
+                    </h2>
+                    <p className="mb-6 text-lg">
+                        Ready to start your project? Get in touch with us today!
+                    </p>
+
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="bg-red-700 hover:bg-red-800 text-white px-8 py-2 rounded">
+                                Get Started
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>Contact Us</DialogTitle>
+                            </DialogHeader>
+                            <ContactForm />
+                        </DialogContent>
+                    </Dialog>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default ContactBanner

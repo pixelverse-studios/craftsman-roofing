@@ -1,5 +1,25 @@
 'use client'
 
-export default function Home() {
-    return <main>home</main>
+import HomeHeroSection from '@/components/home/HomeHero'
+import ServicesBlock from '@/components/home/ServicesBlock'
+import TestimonialsCarousel from '@/components/testimonials/Carousel'
+import FAQSection from '@/components/faqs/FaqSection'
+import ContactSection from '@/components/contact/ContactSection'
+import ProjectsGallery from '@/components/gallery/GalleryLayout'
+import CtaSection from '@/components/cta/CtaSection'
+import WhyUs from '@/components/WhyUs'
+
+export default function HomePage() {
+    return (
+        <main>
+            <HomeHeroSection />
+            <ServicesBlock />
+            <TestimonialsCarousel />
+            <WhyUs />
+            <ProjectsGallery />
+            <CtaSection />
+            <FAQSection />
+            <ContactSection />
+        </main>
+    )
 }

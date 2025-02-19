@@ -51,15 +51,15 @@ const ListItem = React.forwardRef<
                 <a
                     ref={ref}
                     className={cn(
-                        'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                        'group block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[hsl(var(--secondary))] hover:text-[hsl(var(--secondary-foreground))] focus:bg-accent focus:text-accent-foreground',
                         className
                     )}
                     {...props}
                 >
-                    <div className="text-sm font-medium leading-none">
+                    <div className="group-hover:text-[hsl(var(--secondary-foreground))] text-sm font-medium leading-none">
                         {title}
                     </div>
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground group-hover:text-[hsl(var(--secondary-foreground))]">
                         {children}
                     </p>
                 </a>
@@ -165,7 +165,7 @@ export function Header() {
 
                     {/* Desktop Contact Button */}
                     <div className="hidden lg:block">
-                        <Button>Contact Us</Button>
+                        <Button variant="cta">Contact Us</Button>
                     </div>
 
                     {/* Mobile Menu Button */}

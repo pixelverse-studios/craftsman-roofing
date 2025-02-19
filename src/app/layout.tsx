@@ -1,18 +1,13 @@
 import type { Metadata } from 'next'
-
+import { Sora } from 'next/font/google'
 import { Header } from '@/components/header'
+import Footer from '@/components/footer/Footer'
 import './globals.css'
 
-// const geistSans = localFont({
-//     src: './fonts/GeistVF.woff',
-//     variable: '--font-geist-sans',
-//     weight: '100 900'
-// })
-// const geistMono = localFont({
-//     src: './fonts/GeistMonoVF.woff',
-//     variable: '--font-geist-mono',
-//     weight: '100 900'
-// })
+const sora = Sora({
+    subsets: ['latin'],
+    variable: '--font-sora'
+})
 
 export const metadata: Metadata = {
     title: 'Craftsman Roofing',
@@ -25,12 +20,11 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="en">
-            <body>
-                {/* <ThemeProvider defaultColorScheme="light" theme={{}}> */}
+        <html lang="en" className={`${sora.variable}`}>
+            <body className="font-sora">
                 <Header />
                 {children}
-                {/* </ThemeProvider> */}
+                <Footer />
             </body>
         </html>
     )
