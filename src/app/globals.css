@@ -59,15 +59,55 @@
     h2 {
         @apply font-normal text-[24px] leading-normal;
     }
+
     .nav-link {
-        @apply font-normal text-[16px] text-nav hover:text-primary transition-colors;
+        @apply font-normal text-[16px] text-primary transition-colors;
+    }
+    .nav-link:hover {
+        @apply hovered-nav-link; /* => color: hsl(var(--secondary)); */
+    }
+    /* .nav-link:not(.active):hover {
+        @apply text-primary;
+    } */
+    .nav-link.active {
+        /* text color and border using your secondary color */
+        @apply selected-nav-link border-b-2 border-secondary;
     }
 }
 
 /* Custom utilities */
 @layer utilities {
+    .selected-nav-link {
+        color: hsl(var(--secondary));
+        font-weight: bold;
+    }
+    .hovered-nav-link {
+        color: hsl(var(--secondary));
+    }
+
+    .nav-sub-link {
+        transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
+    }
+
+    .nav-sub-link:hover:not(.selected-sub-link) {
+        background-color: hsl(var(--nav));
+        color: hsl(var(--primary));
+    }
+
+    /* Selected sub-link: immediate background (no transition) */
+    .selected-sub-link {
+        background-color: hsl(var(--secondary));
+        color: hsl(var(--secondary-foreground));
+        transition: none;
+
+        & p {
+            color: hsl(var(--secondary-foreground));
+        }
+    }
     .text-secondary {
-        color: hsl(var(--text-secondary));
+        color: hsl(var(--secondary));
     }
     .bg-off-white {
         background-color: hsl(var(--off-white));
@@ -137,7 +177,7 @@
     }
 
     .btn-cta:hover {
-        background-color: transparent;
+        background-color: hsl(var(--secondary-foreground));
         color: hsl(var(--secondary));
     }
 }

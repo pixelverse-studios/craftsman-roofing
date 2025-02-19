@@ -76,17 +76,21 @@ export default function HomeHeroSection() {
         <>
             <section className="relative h-fit p-6">
                 {/* Background Image with Overlay */}
-                <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] bg-cover bg-center">
-                    <div className="absolute inset-0 bg-black/60" />
+                <div
+                    style={{
+                        backgroundImage: 'url("/media/home/Hero_BG.png")'
+                    }}
+                    className={`absolute inset-0 bg-cover bg-center`}
+                >
+                    <div className="absolute inset-0" />
                 </div>
 
-                {/* Content */}
                 <div className="relative max-w-[var(--max-width)] mx-auto pt-24">
                     <div className="text-center text-white space-y-6">
-                        <h1 className="text-5xl md:text-6xl font-bold max-w-4xl mx-auto">
+                        <h1 className="text-5xl md:text-5xl font-bold max-w-4xl mx-auto">
                             Built to Protect, Designed to Last
                         </h1>
-                        <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+                        <p className="text-xl md:text-xl max-w-3xl mx-auto">
                             From durable roofing to seamless gutters and expert
                             masonry, we specialize in solutions that enhance the
                             strength, beauty, and value of your home. Trust us
@@ -94,7 +98,8 @@ export default function HomeHeroSection() {
                         </p>
                         <Button
                             size="lg"
-                            className="mt-8 text-lg px-8 py-6 bg-red-700 hover:bg-red-800"
+                            variant="cta"
+                            className="text-lg h-[4rem]"
                         >
                             Book Your Free Estimate
                         </Button>
