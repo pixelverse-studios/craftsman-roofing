@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import ServiceCard from './ServiceCard'
-import { Home, Layers, Droplets, Building2 } from 'lucide-react'
 import {
     Dialog,
     DialogContent,
@@ -10,24 +9,29 @@ import {
     DialogTrigger
 } from '@/components/ui/dialog'
 
+import RoofingServiceIcon from '../../../public/media/icons/RoofingService_Icon.svg'
+import GutterServiceIcon from '../../../public/media/icons/GutterServices_Icon.svg'
+import SidingServiceIcon from '../../../public/media/icons/SidingService_Icon.svg'
+import MasonryServiceIcon from '../../../public/media/icons/MasonryService_Icon.svg'
+
 const services = [
     {
-        icon: <Home className="w-8 h-8" />,
+        icon: RoofingServiceIcon,
         title: 'Roofing Services',
         href: '/roofing-services'
     },
     {
-        icon: <Layers className="w-8 h-8" />,
+        icon: GutterServiceIcon,
         title: 'Siding Services',
         href: '/siding-services'
     },
     {
-        icon: <Droplets className="w-8 h-8" />,
+        icon: SidingServiceIcon,
         title: 'Gutter Services',
         href: '/gutter-services'
     },
     {
-        icon: <Building2 className="w-8 h-8" />,
+        icon: MasonryServiceIcon,
         title: 'Masonry Services',
         href: '/masonry-services'
     }
@@ -75,7 +79,6 @@ export default function HomeHeroSection() {
     return (
         <>
             <section className="relative h-fit p-6">
-                {/* Background Image with Overlay */}
                 <div
                     style={{
                         backgroundImage: 'url("/media/home/Hero_BG.png")'
@@ -85,7 +88,7 @@ export default function HomeHeroSection() {
                     <div className="absolute inset-0" />
                 </div>
 
-                <div className="relative max-w-[var(--max-width)] mx-auto pt-24">
+                <div className="relative max-w-[var(--max-width)] mx-auto pt-24 px-4">
                     <div className="text-center text-white space-y-6">
                         <h1 className="text-5xl md:text-5xl font-bold max-w-4xl mx-auto">
                             Built to Protect, Designed to Last
@@ -106,7 +109,7 @@ export default function HomeHeroSection() {
                     </div>
 
                     {/* Service Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-24">
+                    <div className="max-w-[var(--max-width)] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-24 p-2">
                         {services.map(service => (
                             <ServiceCard
                                 key={service.title}
@@ -121,7 +124,7 @@ export default function HomeHeroSection() {
 
             {/* Contact Banner */}
             <section className="bg-white py-6 border-b border-red-700">
-                <div className="max-w-[var(--max-width)] mx-auto px-4">
+                <div className="max-w-[var(--max-width)] mx-auto px-6">
                     <div className="flex flex-row justify-between items-center gap-4">
                         <h2 className="text-2xl text-red-700 font-semibold">
                             Contact Us
@@ -129,9 +132,7 @@ export default function HomeHeroSection() {
 
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button className="bg-red-700 hover:bg-red-800 text-white px-8 py-2">
-                                    Get Started
-                                </Button>
+                                <Button variant="cta">Get Started</Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-md">
                                 <DialogHeader>

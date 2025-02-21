@@ -53,7 +53,7 @@ export function Header() {
     const onLogoClick = () => router.push('/')
 
     return (
-        <header className="fixed top-0 left-0 right-0 w-full border-b bg-background z-50">
+        <header className="fixed top-0 left-0 right-0 w-full border-b bg-[hsl(var(--nav))] z-50">
             <div className="max-w-[var(--max-width)] mx-auto px-6 py-4">
                 <div className="relative flex items-center justify-between">
                     <img
@@ -229,7 +229,7 @@ export function Header() {
                     {/* ========== Mobile Navigation ========== */}
                     <div
                         className={cn(
-                            'fixed inset-x-0 top-[65px] bg-background border-b lg:hidden',
+                            'fixed inset-x-0 top-[65px] bg-[hsl(var(--nav))] border-b lg:hidden',
                             'transition-[transform,opacity] duration-300 ease-in-out',
                             isMobileMenuOpen
                                 ? 'translate-y-0 opacity-100 pointer-events-auto'
@@ -242,7 +242,7 @@ export function Header() {
                                     <Link
                                         href="/"
                                         className={cn(
-                                            'nav-sub-link block p-2 text-lg rounded-md',
+                                            'nav-sub-link block py-2 px-4 text-lg rounded-md w-fit',
                                             pathname === '/' &&
                                                 'selected-sub-link'
                                         )}
@@ -257,7 +257,7 @@ export function Header() {
                                     <Link
                                         href="/about"
                                         className={cn(
-                                            'nav-sub-link block p-2 text-lg rounded-md',
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
                                             pathname === '/about' &&
                                                 'selected-sub-link'
                                         )}
@@ -272,7 +272,7 @@ export function Header() {
                                     <Link
                                         href="/projects"
                                         className={cn(
-                                            'nav-sub-link block p-2 text-lg rounded-md',
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
                                             pathname === '/projects' &&
                                                 'selected-sub-link'
                                         )}
@@ -288,7 +288,7 @@ export function Header() {
                                         onClick={() =>
                                             setIsServicesOpen(!isServicesOpen)
                                         }
-                                        className="flex items-center justify-between w-full text-lg nav-sub-link p-2 rounded-md"
+                                        className="flex items-center justify-between w-[14rem] text-lg nav-sub-link py-2 px-4 rounded-md"
                                     >
                                         Services
                                         <ChevronUp
@@ -350,7 +350,7 @@ export function Header() {
                                     <Link
                                         href="/testimonials"
                                         className={cn(
-                                            'nav-sub-link block p-2 text-lg rounded-md',
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
                                             pathname === '/testimonials' &&
                                                 'selected-sub-link'
                                         )}
@@ -365,7 +365,7 @@ export function Header() {
                                     <Link
                                         href="/faqs"
                                         className={cn(
-                                            'nav-sub-link block p-2 text-lg rounded-md',
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
                                             pathname === '/faqs' &&
                                                 'selected-sub-link'
                                         )}

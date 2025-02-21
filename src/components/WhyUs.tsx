@@ -13,7 +13,7 @@ const WhyUs = () => {
                 }}
             />
 
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-[var(--max-width)] mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-12 items-center relative">
                     {/* Left Column - Text Content */}
                     <div className="text-white space-y-8">

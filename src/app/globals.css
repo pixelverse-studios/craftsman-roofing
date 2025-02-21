@@ -19,9 +19,9 @@
         --secondary: 3 63% 41%; /* #AB2A25 */
         --secondary-foreground: 0 0% 100%; /* #FFFFFF */
 
-        --nav: 0 0% 72%; /* #B7B7B7 */
+        --nav: 0 0% 94.1%; /* #F0F0F0 */
         --text-secondary: 0 0% 20%; /* #333333 */
-        --off-white: 0 0% 94%; /* #F0F0F0 */
+        --off-white: 0 0% 94.1%; /* #F0F0F0 */
 
         --card: 0 0% 100%; /* #FFFFFF */
         --card-foreground: 0 0% 11%; /* #1C1C1C */
@@ -86,14 +86,14 @@
     }
 
     .nav-sub-link {
+        color: hsl(var(--primary));
         transition:
             background-color 0.2s ease,
             color 0.2s ease;
     }
 
     .nav-sub-link:hover:not(.selected-sub-link) {
-        background-color: hsl(var(--nav));
-        color: hsl(var(--primary));
+        background-color: hsl(var(--input));
     }
 
     /* Selected sub-link: immediate background (no transition) */

@@ -1,105 +1,52 @@
-import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
+import FullHeightBackgroundImg from '../backgroundLayer/FullHeightBackgroundImg'
+import RoofingServiceIcon from '../../../public/media/icons/RoofingService_Icon.svg'
+import EmergencyRoofingIcon from '../../../public/media/icons/EmergencyRoofing_Icon.svg'
+import RoofingReplacementIcon from '../../../public/media/icons/RoofReplacement_Icon.svg'
+import GutterServiceIcon from '../../../public/media/icons/GutterServices_Icon.svg'
+import SidingServiceIcon from '../../../public/media/icons/SidingService_Icon.svg'
+import MasonryServiceIcon from '../../../public/media/icons/MasonryService_Icon.svg'
+
 const services: ServiceCardProps[] = [
     {
-        icon: (
-            <svg
-                className="w-8 h-8 text-red-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-            >
-                <path d="M3 21h18L12 3 3 21zm9-3h-1v-1h1v1zm0-3h-1v-4h1v4z" />
-            </svg>
-        ),
+        icon: RoofingServiceIcon,
         title: 'Roof Service',
         description:
             'Expert roofing protects your home with durable, stylish installations, repairs, and replacements.',
         link: '/learn-more'
     },
     {
-        icon: (
-            <svg
-                className="w-8 h-8 text-red-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-            >
-                <path d="M19 9l-7-7-7 7m14 7l-7 7-7-7" />
-            </svg>
-        ),
+        icon: MasonryServiceIcon,
         title: 'Masonry Services',
         description:
             'Transform your property with skilled masonry for lasting durability and timeless beauty.',
         link: '/learn-more'
     },
     {
-        icon: (
-            <svg
-                className="w-8 h-8 text-red-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-            >
-                <path d="M4 21V8l8-5 8 5v13H4z" />
-            </svg>
-        ),
+        icon: SidingServiceIcon,
         title: 'Siding',
         description:
             "Elevate your home's style and efficiency with premium siding that offers lasting protection and charm.",
         link: '/learn-more'
     },
     {
-        icon: (
-            <svg
-                className="w-8 h-8 text-red-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-            >
-                <path d="M12 3v18M3 9h18M3 15h18" />
-            </svg>
-        ),
+        icon: EmergencyRoofingIcon,
         title: 'Emergency Roofing',
         description:
             'Rapid, reliable emergency services to protect your home and restore safety when you need it most.',
         link: '/learn-more'
     },
     {
-        icon: (
-            <svg
-                className="w-8 h-8 text-red-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-            >
-                <path d="M3 21h18L12 3 3 21z" />
-            </svg>
-        ),
+        icon: RoofingReplacementIcon,
         title: 'Roof Replacement',
         description:
             'Upgrade your home with expert roof replacement that ensures superior protection and durability.',
         link: '/learn-more'
     },
     {
-        icon: (
-            <svg
-                className="w-8 h-8 text-red-600"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-            >
-                <path d="M4 10v10h16V10M1 10h22M12 10V3" />
-            </svg>
-        ),
+        icon: GutterServiceIcon,
         title: 'Gutter Installation',
         description:
             'Protect your home with custom gutters designed for flawless performance, from installation to cleaning.',
@@ -108,7 +55,7 @@ const services: ServiceCardProps[] = [
 ]
 
 interface ServiceCardProps {
-    icon: React.ReactNode
+    icon: any
     title: string
     description: string
     link: string
@@ -122,7 +69,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 }) => (
     <Card className="bg-white p-6 rounded-xl">
         <div className="space-y-4">
-            <div>{icon}</div>
+            <img src={icon.src} alt={description} />
             <h3 className="text-xl font-bold text-gray-900">{title}</h3>
             <p className="text-gray-600">{description}</p>
             <a
@@ -137,9 +84,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
 export default function ServicesBlock() {
     return (
-        <section className="bg-[#0A0F29] py-16">
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+        <section className="relative h-fit py-16">
+            <FullHeightBackgroundImg />
+            <div className="max-w-[var(--max-width)] mx-auto px-6 flex flex-col gap-8 z-10">
+                <div>
                     <div className="space-y-6">
                         <h2 className="text-4xl font-bold text-white">
                             Our Services
@@ -149,23 +97,11 @@ export default function ServicesBlock() {
                             everything you need to ensure your roof is durable,
                             reliable, and built to last.
                         </p>
-                        <Button
-                            variant="secondary"
-                            className="bg-red-700 text-white hover:bg-red-800"
-                        >
-                            Learn More
-                        </Button>
-                    </div>
-                    <div className="relative h-full min-h-[300px] rounded-2xl overflow-hidden">
-                        <img
-                            src="/api/placeholder/800/600"
-                            alt="Roofing workers on a roof"
-                            className="absolute inset-0 w-full h-full object-cover rounded-2xl"
-                        />
+                        <Button variant="cta">Learn More</Button>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {services.map((service, index) => (
                         <ServiceCard key={index} {...service} />
                     ))}

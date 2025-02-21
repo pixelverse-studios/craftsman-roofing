@@ -38,7 +38,7 @@ const ContactSection = () => {
 
             {/* Content */}
             <div className="relative">
-                <div className="max-w-7xl mx-auto px-4 py-16">
+                <div className="max-w-[var(--max-width)] mx-auto px-4 py-16">
                     <div className="grid lg:grid-cols-2 gap-8 items-start">
                         {/* Left Column */}
                         <div className="text-white space-y-8">
