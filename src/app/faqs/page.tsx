@@ -1,5 +1,11 @@
 'use client'
 
+import FAQSection from '@/components/faqs/FaqSection'
+
 export default function Home() {
-    return <main>faqs</main>
+    return (
+        <main>
+            <FAQSection />
+        </main>
+    )
 }

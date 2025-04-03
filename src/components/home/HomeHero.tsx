@@ -8,6 +8,8 @@ import {
     DialogTitle,
     DialogTrigger
 } from '@/components/ui/dialog'
+import ContactForm from '../contact/ContactForm'
+import CallToAction from '../CallToAction'
 
 import RoofingServiceIcon from '../../../public/media/icons/RoofingService_Icon.svg'
 import GutterServiceIcon from '../../../public/media/icons/GutterServices_Icon.svg'
@@ -37,44 +39,6 @@ const services = [
     }
 ]
 
-// Contact Form Component
-const ContactForm = () => (
-    <form className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-            <input
-                type="text"
-                placeholder="First name*"
-                className="w-full p-2 rounded border border-gray-300"
-            />
-            <input
-                type="text"
-                placeholder="Last name*"
-                className="w-full p-2 rounded border border-gray-300"
-            />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-            <input
-                type="email"
-                placeholder="Email*"
-                className="w-full p-2 rounded border border-gray-300"
-            />
-            <input
-                type="tel"
-                placeholder="Phone*"
-                className="w-full p-2 rounded border border-gray-300"
-            />
-        </div>
-        <input
-            type="text"
-            placeholder="Zip code*"
-            className="w-full p-2 rounded border border-gray-300"
-        />
-        <Button type="submit" className="w-full bg-red-700 hover:bg-red-800">
-            Submit
-        </Button>
-    </form>
-)
-
 export default function HomeHeroSection() {
     return (
         <>
@@ -99,13 +63,10 @@ export default function HomeHeroSection() {
                             strength, beauty, and value of your home. Trust us
                             to safeguard what matters most.
                         </p>
-                        <Button
-                            size="lg"
-                            variant="cta"
-                            className="text-lg h-[4rem]"
-                        >
-                            Book Your Free Estimate
-                        </Button>
+                        <CallToAction
+                            label="Book Your Free Estimate"
+                            buttonClass="h-[4rem] text-2xl"
+                        />
                     </div>
 
                     {/* Service Cards */}

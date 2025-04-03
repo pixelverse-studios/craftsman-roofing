@@ -16,39 +16,47 @@ const config: Config = {
                 custom: 'var(--max-width)'
             },
             colors: {
-                border: 'hsl(var(--border))',
-                input: 'hsl(var(--input))',
-                ring: 'hsl(var(--ring))',
-                background: 'hsl(var(--background))',
-                foreground: 'hsl(var(--foreground))',
-                nav: 'hsl(var(--nav))',
+                border: 'var(--border)',
+                input: 'var(--input)',
+                ring: 'var(--ring)',
+                background: 'var(--background)',
+                foreground: 'var(--foreground)',
+                nav: 'var(--nav)',
                 primary: {
-                    DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))'
+                    DEFAULT: 'var(--primary)',
+                    foreground: 'var(--primary-foreground)'
                 },
                 secondary: {
-                    DEFAULT: 'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))'
+                    DEFAULT: 'var(--secondary)',
+                    foreground: 'var(--secondary-foreground)'
                 },
                 destructive: {
-                    DEFAULT: 'hsl(var(--destructive))',
-                    foreground: 'hsl(var(--destructive-foreground))'
+                    DEFAULT: 'var(--destructive)',
+                    foreground: 'var(--destructive-foreground)'
                 },
                 muted: {
-                    DEFAULT: 'hsl(var(--muted))',
-                    foreground: 'hsl(var(--muted-foreground))'
+                    DEFAULT: 'var(--muted)',
+                    foreground: 'var(--muted-foreground)'
                 },
                 accent: {
-                    DEFAULT: 'hsl(var(--accent))',
-                    foreground: 'hsl(var(--accent-foreground))'
+                    DEFAULT: 'var(--accent)',
+                    foreground: 'var(--accent-foreground)'
                 },
                 popover: {
-                    DEFAULT: 'hsl(var(--nav))',
-                    foreground: 'hsl(var(--nav))'
+                    DEFAULT: 'var(--nav)',
+                    foreground: 'var(--nav)'
                 },
                 card: {
-                    DEFAULT: 'hsl(var(--card))',
-                    foreground: 'hsl(var(--card-foreground))'
+                    DEFAULT: 'var(--card)',
+                    foreground: 'var(--card-foreground)'
+                },
+                white: {
+                    DEFAULT: 'var(--off-white)',
+                    bright: 'var(--background)'
+                },
+                black: {
+                    DEFAULT: 'var(--foreground)',
+                    muted: 'var(--black-muted)'
                 }
             },
             borderRadius: {

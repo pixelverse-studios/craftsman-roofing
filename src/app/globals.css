@@ -9,38 +9,40 @@
     :root {
         --max-width: 1500px;
 
-        /* Colors - Converting HEX to HSL while maintaining exact colors */
-        --background: 0 0% 100%; /* #FFFFFF */
-        --foreground: 0 0% 11%; /* #1C1C1C */
+        /* Colors - Converted HSL to HEX */
+        --background: #ffffff;
+        --foreground: #1c1c1c;
 
-        --primary: 222 71% 10%; /* #07122b */
-        --primary-foreground: 0 0% 100%; /* #FFFFFF */
+        --black-muted: #333333;
 
-        --secondary: 3 63% 41%; /* #AB2A25 */
-        --secondary-foreground: 0 0% 100%; /* #FFFFFF */
+        --primary: #07122b;
+        --primary-foreground: #ffffff;
 
-        --nav: 0 0% 94.1%; /* #F0F0F0 */
-        --text-secondary: 0 0% 20%; /* #333333 */
-        --off-white: 0 0% 94.1%; /* #F0F0F0 */
+        --secondary: #ab2a25;
+        --secondary-foreground: #ffffff;
 
-        --card: 0 0% 100%; /* #FFFFFF */
-        --card-foreground: 0 0% 11%; /* #1C1C1C */
+        --nav: #f0f0f0;
+        --text-secondary: #333333;
+        --off-white: #f0f0f0;
 
-        --popover: 0 0% 100%; /* #FFFFFF */
-        --popover-foreground: 0 0% 11%; /* #1C1C1C */
+        --card: #ffffff;
+        --card-foreground: #1c1c1c;
 
-        --muted: 0 0% 94%; /* #F0F0F0 */
-        --muted-foreground: 0 0% 20%; /* #333333 */
+        --popover: #ffffff;
+        --popover-foreground: #1c1c1c;
 
-        --accent: 0 0% 94%; /* #F0F0F0 */
-        --accent-foreground: 0 0% 11%; /* #1C1C1C */
+        --muted: #f0f0f0;
+        --muted-foreground: #333333;
 
-        --destructive: 3 63% 41%; /* #AB2A25 */
-        --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+        --accent: #f0f0f0;
+        --accent-foreground: #1c1c1c;
 
-        --border: 0 0% 72%; /* #B7B7B7 */
-        --input: 0 0% 72%; /* #B7B7B7 */
-        --ring: 222 71% 10%; /* #07122b */
+        --destructive: #ab2a25;
+        --destructive-foreground: #ffffff;
+
+        --border: #b7b7b7;
+        --input: #b7b7b7;
+        --ring: #07122b;
 
         --radius: 0.5rem;
     }
@@ -53,6 +55,11 @@
     body {
         @apply bg-background text-foreground font-normal text-[18px];
     }
+    main {
+        min-height: calc(100dvh - 5rem - 12.9rem);
+        height: fit-content;
+        margin-top: 4rem;
+    }
     h1 {
         @apply font-semibold text-[42px] leading-tight;
     }
@@ -64,53 +71,57 @@
         @apply font-normal text-[16px] text-primary transition-colors;
     }
     .nav-link:hover {
-        @apply hovered-nav-link; /* => color: hsl(var(--secondary)); */
+        @apply hovered-nav-link; /* => color: var(--secondary); */
     }
-    /* .nav-link:not(.active):hover {
-        @apply text-primary;
-    } */
     .nav-link.active {
         /* text color and border using your secondary color */
         @apply selected-nav-link border-b-2 border-secondary;
+    }
+
+    .pac-container {
+        z-index: 9999 !important;
+        /* optionally: */
+        border-radius: 0.375rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 }
 
 /* Custom utilities */
 @layer utilities {
     .selected-nav-link {
-        color: hsl(var(--secondary));
+        color: var(--secondary);
         font-weight: bold;
     }
     .hovered-nav-link {
-        color: hsl(var(--secondary));
+        color: var(--secondary);
     }
 
     .nav-sub-link {
-        color: hsl(var(--primary));
+        color: var(--primary);
         transition:
             background-color 0.2s ease,
             color 0.2s ease;
     }
 
     .nav-sub-link:hover:not(.selected-sub-link) {
-        background-color: hsl(var(--input));
+        background-color: var(--input);
     }
 
     /* Selected sub-link: immediate background (no transition) */
     .selected-sub-link {
-        background-color: hsl(var(--secondary));
-        color: hsl(var(--secondary-foreground));
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
         transition: none;
 
         & p {
-            color: hsl(var(--secondary-foreground));
+            color: var(--secondary-foreground);
         }
     }
     .text-secondary {
-        color: hsl(var(--secondary));
+        color: var(--secondary);
     }
     .bg-off-white {
-        background-color: hsl(var(--off-white));
+        background-color: var(--off-white);
     }
 }
 
@@ -141,11 +152,11 @@
 
     /* Style Variants */
     .btn-default {
-        @apply bg-primary text-primary-foreground shadow hover:bg-primary/90;
+        @apply bg-primary text-primary-foreground shadow hover:bg-primary;
     }
 
     .btn-destructive {
-        @apply bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90;
+        @apply bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive;
     }
 
     .btn-outline {
@@ -153,7 +164,7 @@
     }
 
     .btn-secondary {
-        @apply bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80;
+        @apply bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary;
     }
 
     .btn-ghost {
@@ -165,19 +176,19 @@
     }
 
     .btn-primary {
-        @apply bg-primary text-primary-foreground shadow hover:bg-primary/90;
+        @apply bg-primary text-primary-foreground shadow hover:bg-primary;
     }
 
     /* CTA Variant */
     .btn-cta {
         @apply text-primary-foreground px-6 py-3 border-2 transition-all duration-200;
-        background-color: hsl(var(--secondary));
-        border-color: hsl(var(--secondary));
-        color: hsl(var(--secondary-foreground));
+        background-color: var(--secondary);
+        border-color: var(--secondary);
+        color: var(--secondary-foreground);
     }
 
     .btn-cta:hover {
-        background-color: hsl(var(--secondary-foreground));
-        color: hsl(var(--secondary));
+        background-color: var(--secondary-foreground);
+        color: var(--secondary);
     }
 }

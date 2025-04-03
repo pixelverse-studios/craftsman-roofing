@@ -18,7 +18,7 @@ const Footer = () => {
                     {/* Logo */}
                     <Link href="/" className="flex-shrink-0">
                         <img
-                            src="/api/placeholder/120/40"
+                            src="/media/Craftsman_Logo.svg"
                             alt="Craftsman Roofing"
                             className="h-10"
                         />

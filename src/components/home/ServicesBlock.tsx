@@ -86,7 +86,7 @@ export default function ServicesBlock() {
     return (
         <section className="relative h-fit py-16">
             <FullHeightBackgroundImg />
-            <div className="max-w-[var(--max-width)] mx-auto px-6 flex flex-col gap-8 z-10">
+            <div className="max-w-custom mx-auto px-6 flex flex-col gap-8 z-10">
                 <div>
                     <div className="space-y-6">
                         <h2 className="text-4xl font-bold text-white">

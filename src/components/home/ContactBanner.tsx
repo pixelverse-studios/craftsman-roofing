@@ -7,53 +7,7 @@ import {
     DialogTitle,
     DialogTrigger
 } from '@/components/ui/dialog'
-
-const ContactForm = () => (
-    <form className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-            <div>
-                <input
-                    type="text"
-                    placeholder="First name*"
-                    className="w-full p-2 rounded border border-gray-300"
-                />
-            </div>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Last name*"
-                    className="w-full p-2 rounded border border-gray-300"
-                />
-            </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-            <div>
-                <input
-                    type="email"
-                    placeholder="Email*"
-                    className="w-full p-2 rounded border border-gray-300"
-                />
-            </div>
-            <div>
-                <input
-                    type="tel"
-                    placeholder="Phone*"
-                    className="w-full p-2 rounded border border-gray-300"
-                />
-            </div>
-        </div>
-        <div>
-            <input
-                type="text"
-                placeholder="Zip code*"
-                className="w-full p-2 rounded border border-gray-300"
-            />
-        </div>
-        <Button type="submit" className="w-full bg-red-700 hover:bg-red-800">
-            Submit
-        </Button>
-    </form>
-)
+import ContactForm from '../contact/ContactForm'
 
 const ContactBanner = () => {
     return (

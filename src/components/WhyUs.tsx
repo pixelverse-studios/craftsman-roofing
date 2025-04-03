@@ -1,18 +1,11 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
+import FullHeightBackgroundImg from './backgroundLayer/FullHeightBackgroundImg'
 
 const WhyUs = () => {
     return (
-        <section className="relative bg-[#0A0F29] py-24">
-            {/* Background Pattern */}
-            <div
-                className="absolute inset-0 opacity-10"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0A30 30 0 0 1 30 60A30 30 0 0 1 30 0' fill='%23ffffff' fill-opacity='0.4'/%3E%3C/svg%3E")`,
-                    backgroundSize: '60px 60px'
-                }}
-            />
-
+        <section className="relative py-24">
+            <FullHeightBackgroundImg />
             <div className="max-w-[var(--max-width)] mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-12 items-center relative">
                     {/* Left Column - Text Content */}

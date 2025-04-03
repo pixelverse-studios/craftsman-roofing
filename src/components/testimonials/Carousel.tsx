@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/carousel'
 import FullHeightBackgroundImg from '../backgroundLayer/FullHeightBackgroundImg'
 import PageBreakImg from '../../../public/media/PageBreakSlice.svg'
-// import PageBreakImg from '../../../public/media/PageBreakDesign.png'
 import GoogleIcon from '../../../public/media/icons/Google_Icon.svg'
 
 interface Testimonial {
@@ -58,16 +57,16 @@ const testimonials: Testimonial[] = [
 
 const TestimonialsCarousel = () => {
     return (
-        <section className="py-16 bg-[hsl(var(--off-white))] relative overflow-hidden">
+        <section className="py-16 bg-white relative overflow-hidden">
             <div className="py-8">
-                <div className="max-w-7xl mx-auto px-4  flex flex-col gap-2">
+                <div className="max-w-custom mx-auto px-4  flex flex-col gap-2">
                     <img
                         src={GoogleIcon.src}
                         alt="google logo"
                         className="mx-auto mb-4"
                     />
                     <div className="text-center">
-                        <h2 className="text-4xl font-bold text-[hsl(var(--primary))] mb-6">
+                        <h2 className="text-4xl font-bold text-primary mb-6">
                             Customer testimonials
                         </h2>
                     </div>
@@ -76,7 +75,7 @@ const TestimonialsCarousel = () => {
                             align: 'center',
                             loop: true
                         }}
-                        className="w-full"
+                        className="w-[80%] mx-auto"
                     >
                         <CarouselContent>
                             {testimonials.map(testimonial => (
@@ -96,25 +95,10 @@ const TestimonialsCarousel = () => {
                         </CarouselContent>
 
                         <div className="hidden md:block">
-                            <CarouselPrevious className="h-14 w-14 border-2 border-[hsl(var(--secondary))]" />
-                            <CarouselNext className="h-14 w-14 border-2 border-[hsl(var(--secondary))]" />
+                            <CarouselPrevious className="h-14 w-14 border-2 border-secondary" />
+                            <CarouselNext className="h-14 w-14 border-2 border-secondary" />
                         </div>
                     </Carousel>
-
-                    {/* Dots */}
-                    <div className="flex justify-center gap-4 mt-6">
-                        {testimonials.map((_, index) => (
-                            <button
-                                key={index}
-                                className={`h-4 w-4 rounded-full ${
-                                    index === 0
-                                        ? 'bg-red-600'
-                                        : 'bg-[hsl(var(--nav))]'
-                                }`}
-                                aria-label={`Go to slide ${index + 1}`}
-                            />
-                        ))}
-                    </div>
                 </div>
             </div>
         </section>

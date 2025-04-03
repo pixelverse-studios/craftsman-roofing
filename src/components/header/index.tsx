@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import Logo from '../../../public/media/Craftsman_Logo.svg'
+import CallToAction from '../CallToAction'
 
 const servicesSubMenu = [
     {
@@ -53,7 +54,7 @@ export function Header() {
     const onLogoClick = () => router.push('/')
 
     return (
-        <header className="fixed top-0 left-0 right-0 w-full border-b bg-[hsl(var(--nav))] z-50">
+        <header className="fixed top-0 left-0 right-0 w-full border-b bg-nav z-50">
             <div className="max-w-[var(--max-width)] mx-auto px-6 py-4">
                 <div className="relative flex items-center justify-between">
                     <img
@@ -209,7 +210,7 @@ export function Header() {
 
                     {/* Desktop Contact Button */}
                     <div className="hidden lg:block">
-                        <Button variant="cta">Contact Us</Button>
+                        <CallToAction label="Contact Us" />
                     </div>
 
                     {/* ========== Mobile Menu Button ========== */}
@@ -229,7 +230,7 @@ export function Header() {
                     {/* ========== Mobile Navigation ========== */}
                     <div
                         className={cn(
-                            'fixed inset-x-0 top-[65px] bg-[hsl(var(--nav))] border-b lg:hidden',
+                            'fixed inset-x-0 top-[65px] bg-nav border-b lg:hidden',
                             'transition-[transform,opacity] duration-300 ease-in-out',
                             isMobileMenuOpen
                                 ? 'translate-y-0 opacity-100 pointer-events-auto'
