@@ -3,7 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react'
+import { Menu, X, ChevronUp } from 'lucide-react'
 
 import {
     NavigationMenu,
@@ -19,30 +19,8 @@ import { cn } from '@/lib/utils'
 import Logo from '../../../public/media/Craftsman_Logo.svg'
 import CallToAction from '../CallToAction'
 
-const servicesSubMenu = [
-    {
-        title: 'Roofing Services',
-        href: '/services/roofing-services',
-        description:
-            'Professional roofing installation, repair, and maintenance.'
-    },
-    {
-        title: 'Gutter Services',
-        href: '/services/gutter-services',
-        description:
-            'Complete gutter solutions including installation & cleaning.'
-    },
-    {
-        title: 'Siding Services',
-        href: '/services/siding-services',
-        description: 'Expert siding installation and repair services.'
-    },
-    {
-        title: 'Masonry Services',
-        href: '/services/masonry-services',
-        description: 'Professional masonry work and repairs.'
-    }
-]
+import { staticRoutes } from '@/lib/navigation'
+import { servicesSubMenu } from '@/lib/services'
 
 export function Header() {
     const router = useRouter()
@@ -68,142 +46,94 @@ export function Header() {
                     <nav className="hidden lg:block">
                         <NavigationMenu>
                             <NavigationMenuList className="space-x-2">
-                                {/* Home */}
-                                <NavigationMenuItem>
-                                    <Link href="/" legacyBehavior passHref>
-                                        <NavigationMenuLink
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                'nav-link',
-                                                pathname === '/' && 'active'
-                                            )}
-                                        >
-                                            Home
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-
-                                {/* Our Company */}
-                                <NavigationMenuItem>
-                                    <Link href="/about" legacyBehavior passHref>
-                                        <NavigationMenuLink
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                'nav-link',
-                                                pathname === '/about' &&
-                                                    'active'
-                                            )}
-                                        >
-                                            Our Company
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-
-                                {/* Our Projects */}
-                                <NavigationMenuItem>
-                                    <Link
-                                        href="/projects"
-                                        legacyBehavior
-                                        passHref
-                                    >
-                                        <NavigationMenuLink
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                'nav-link',
-                                                pathname === '/projects' &&
-                                                    'active'
-                                            )}
-                                        >
-                                            Our Projects
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-
-                                {/* ========== Services Drop-down ========== */}
-                                <NavigationMenuItem>
-                                    <NavigationMenuTrigger
-                                        className={cn(
-                                            'nav-link',
-                                            // Highlight "Services" if path starts with /services/
-                                            pathname.startsWith('/services/') &&
-                                                'active'
-                                        )}
-                                    >
-                                        Services
-                                    </NavigationMenuTrigger>
-                                    <NavigationMenuContent>
-                                        <ul className="grid w-[400px] gap-3 p-4">
-                                            {servicesSubMenu.map(service => {
-                                                const isActive =
-                                                    pathname === service.href
-                                                return (
-                                                    <li key={service.title}>
-                                                        <NavigationMenuLink
-                                                            asChild
-                                                        >
-                                                            <Link
-                                                                href={
+                                {staticRoutes.map(({ path, label }) => {
+                                    if (label === 'Services') {
+                                        return (
+                                            <NavigationMenuItem key={path}>
+                                                <Link
+                                                    href={path}
+                                                    legacyBehavior
+                                                    passHref
+                                                >
+                                                    <NavigationMenuTrigger
+                                                        className={cn(
+                                                            'nav-link',
+                                                            pathname.startsWith(
+                                                                '/services'
+                                                            ) && 'active'
+                                                        )}
+                                                    >
+                                                        {label}
+                                                    </NavigationMenuTrigger>
+                                                </Link>
+                                                <NavigationMenuContent>
+                                                    <ul className="grid w-[400px] gap-3 p-4">
+                                                        {servicesSubMenu.map(
+                                                            service => {
+                                                                const isActive =
+                                                                    pathname ===
                                                                     service.href
-                                                                }
-                                                                className={cn(
-                                                                    'nav-sub-link block p-3 rounded-md',
-                                                                    isActive &&
-                                                                        'selected-sub-link'
-                                                                )}
-                                                            >
-                                                                <div className="text-md font-medium mb-1">
-                                                                    {
-                                                                        service.title
-                                                                    }
-                                                                </div>
-                                                                <p className="text-sm text-muted-foreground line-clamp-2">
-                                                                    {
-                                                                        service.description
-                                                                    }
-                                                                </p>
-                                                            </Link>
-                                                        </NavigationMenuLink>
-                                                    </li>
-                                                )
-                                            })}
-                                        </ul>
-                                    </NavigationMenuContent>
-                                </NavigationMenuItem>
-
-                                {/* Testimonials */}
-                                <NavigationMenuItem>
-                                    <Link
-                                        href="/testimonials"
-                                        legacyBehavior
-                                        passHref
-                                    >
-                                        <NavigationMenuLink
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                'nav-link',
-                                                pathname === '/testimonials' &&
-                                                    'active'
-                                            )}
-                                        >
-                                            Testimonials
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
-
-                                {/* FAQs */}
-                                <NavigationMenuItem>
-                                    <Link href="/faqs" legacyBehavior passHref>
-                                        <NavigationMenuLink
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                'nav-link',
-                                                pathname === '/faqs' && 'active'
-                                            )}
-                                        >
-                                            FAQs
-                                        </NavigationMenuLink>
-                                    </Link>
-                                </NavigationMenuItem>
+                                                                return (
+                                                                    <li
+                                                                        key={
+                                                                            service.title
+                                                                        }
+                                                                    >
+                                                                        <NavigationMenuLink
+                                                                            asChild
+                                                                        >
+                                                                            <Link
+                                                                                href={
+                                                                                    service.href
+                                                                                }
+                                                                                className={cn(
+                                                                                    'nav-sub-link block p-3 rounded-md',
+                                                                                    isActive &&
+                                                                                        'selected-sub-link'
+                                                                                )}
+                                                                            >
+                                                                                <div className="text-md font-medium mb-1">
+                                                                                    {
+                                                                                        service.title
+                                                                                    }
+                                                                                </div>
+                                                                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                                                                    {
+                                                                                        service.description
+                                                                                    }
+                                                                                </p>
+                                                                            </Link>
+                                                                        </NavigationMenuLink>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                </NavigationMenuContent>
+                                            </NavigationMenuItem>
+                                        )
+                                    }
+                                    return (
+                                        <NavigationMenuItem key={label}>
+                                            <Link
+                                                href={path}
+                                                legacyBehavior
+                                                passHref
+                                            >
+                                                <NavigationMenuLink
+                                                    className={cn(
+                                                        navigationMenuTriggerStyle(),
+                                                        'nav-link',
+                                                        pathname === path &&
+                                                            'active'
+                                                    )}
+                                                >
+                                                    {label}
+                                                </NavigationMenuLink>
+                                            </Link>
+                                        </NavigationMenuItem>
+                                    )
+                                })}
                             </NavigationMenuList>
                         </NavigationMenu>
                     </nav>
@@ -239,144 +169,96 @@ export function Header() {
                     >
                         <nav className="max-w-[var(--max-width)] mx-auto px-6 py-4">
                             <ul className="space-y-4">
-                                <li>
-                                    <Link
-                                        href="/"
-                                        className={cn(
-                                            'nav-sub-link block py-2 px-4 text-lg rounded-md w-fit',
-                                            pathname === '/' &&
-                                                'selected-sub-link'
-                                        )}
-                                        onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                        }
-                                    >
-                                        Home
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/about"
-                                        className={cn(
-                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
-                                            pathname === '/about' &&
-                                                'selected-sub-link'
-                                        )}
-                                        onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                        }
-                                    >
-                                        Our Company
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/projects"
-                                        className={cn(
-                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
-                                            pathname === '/projects' &&
-                                                'selected-sub-link'
-                                        )}
-                                        onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                        }
-                                    >
-                                        Our Projects
-                                    </Link>
-                                </li>
-                                <li>
-                                    <button
-                                        onClick={() =>
-                                            setIsServicesOpen(!isServicesOpen)
-                                        }
-                                        className="flex items-center justify-between w-[14rem] text-lg nav-sub-link py-2 px-4 rounded-md"
-                                    >
-                                        Services
-                                        <ChevronUp
-                                            className={cn(
-                                                'h-4 w-4 transition-transform duration-200',
-                                                isServicesOpen && 'rotate-180'
-                                            )}
-                                        />
-                                    </button>
-                                    <div
-                                        className={cn(
-                                            'grid transition-[grid-template-rows,opacity] duration-200 ease-in-out',
-                                            isServicesOpen
-                                                ? 'grid-rows-[1fr] opacity-100'
-                                                : 'grid-rows-[0fr] opacity-0'
-                                        )}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <ul className="pl-4 py-2 space-y-2">
-                                                {servicesSubMenu.map(
-                                                    service => {
-                                                        const isActive =
-                                                            pathname ===
-                                                            service.href
-                                                        return (
-                                                            <li
-                                                                key={
-                                                                    service.title
-                                                                }
-                                                            >
-                                                                <Link
-                                                                    href={
-                                                                        service.href
-                                                                    }
-                                                                    className={cn(
-                                                                        'nav-sub-link block p-2 text-sm rounded-md w-fit',
-                                                                        isActive &&
-                                                                            'selected-sub-link'
-                                                                    )}
-                                                                    onClick={() =>
-                                                                        setIsMobileMenuOpen(
-                                                                            false
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        service.title
-                                                                    }
-                                                                </Link>
-                                                            </li>
+                                {staticRoutes.map(({ path, label }) => {
+                                    if (label === 'Services') {
+                                        return (
+                                            <li>
+                                                <button
+                                                    onClick={() =>
+                                                        setIsServicesOpen(
+                                                            !isServicesOpen
                                                         )
                                                     }
+                                                    className="flex items-center justify-between w-[14rem] text-lg nav-sub-link py-2 px-4 rounded-md"
+                                                >
+                                                    Services
+                                                    <ChevronUp
+                                                        className={cn(
+                                                            'h-4 w-4 transition-transform duration-200',
+                                                            isServicesOpen &&
+                                                                'rotate-180'
+                                                        )}
+                                                    />
+                                                </button>
+                                                <div
+                                                    className={cn(
+                                                        'grid transition-[grid-template-rows,opacity] duration-200 ease-in-out',
+                                                        isServicesOpen
+                                                            ? 'grid-rows-[1fr] opacity-100'
+                                                            : 'grid-rows-[0fr] opacity-0'
+                                                    )}
+                                                >
+                                                    <div className="overflow-hidden">
+                                                        <ul className="pl-4 py-2 space-y-2">
+                                                            {servicesSubMenu.map(
+                                                                service => {
+                                                                    const isActive =
+                                                                        pathname ===
+                                                                        service.href
+                                                                    return (
+                                                                        <li
+                                                                            key={
+                                                                                service.title
+                                                                            }
+                                                                        >
+                                                                            <Link
+                                                                                href={
+                                                                                    service.href
+                                                                                }
+                                                                                className={cn(
+                                                                                    'nav-sub-link block p-2 text-sm rounded-md w-fit',
+                                                                                    isActive &&
+                                                                                        'selected-sub-link'
+                                                                                )}
+                                                                                onClick={() =>
+                                                                                    setIsMobileMenuOpen(
+                                                                                        false
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    service.title
+                                                                                }
+                                                                            </Link>
+                                                                        </li>
+                                                                    )
+                                                                }
+                                                            )}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        )
+                                    }
+                                    return (
+                                        <li key={label}>
+                                            <Link
+                                                href={path}
+                                                className={cn(
+                                                    'nav-sub-link block py-2 px-4 text-lg rounded-md w-fit',
+                                                    pathname === path &&
+                                                        'selected-sub-link'
                                                 )}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/testimonials"
-                                        className={cn(
-                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
-                                            pathname === '/testimonials' &&
-                                                'selected-sub-link'
-                                        )}
-                                        onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                        }
-                                    >
-                                        Testimonials
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/faqs"
-                                        className={cn(
-                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
-                                            pathname === '/faqs' &&
-                                                'selected-sub-link'
-                                        )}
-                                        onClick={() =>
-                                            setIsMobileMenuOpen(false)
-                                        }
-                                    >
-                                        FAQs
-                                    </Link>
-                                </li>
+                                                onClick={() =>
+                                                    setIsMobileMenuOpen(false)
+                                                }
+                                            >
+                                                {label}
+                                            </Link>
+                                        </li>
+                                    )
+                                })}
+
                                 <li>
                                     <Button variant="cta">Contact Us</Button>
                                 </li>

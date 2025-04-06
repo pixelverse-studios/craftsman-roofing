@@ -1,5 +1,4 @@
-import React from 'react'
-import ServiceCard from './ServiceCard'
+import ServiceCard from '../home/ServiceCard'
 import CallToAction from '../CallToAction'
 
 const services = [

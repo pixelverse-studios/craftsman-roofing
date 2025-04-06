@@ -1,6 +1,6 @@
 'use client'
 
-import HomeHeroSection from '@/components/home/HomeHero'
+import HomeHeroSection from '@/components/hero/HomeHero'
 import ServicesBlock from '@/components/home/ServicesBlock'
 import TestimonialsCarousel from '@/components/testimonials/Carousel'
 import FAQSection from '@/components/faqs/FaqSection'
@@ -14,7 +14,7 @@ export default function HomePage() {
     return (
         <main>
             <HomeHeroSection />
-            <ContactBanner />
+            <ContactBanner message="Contact Us" button="Get Started" />
             <ServicesBlock />
             <TestimonialsCarousel />
             <WhyUs />

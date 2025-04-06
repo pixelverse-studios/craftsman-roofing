@@ -1,88 +1,40 @@
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
 import FullHeightBackgroundImg from '../backgroundLayer/FullHeightBackgroundImg'
-import RoofingServiceIcon from '../../../public/media/icons/RoofingService_Icon.svg'
-import EmergencyRoofingIcon from '../../../public/media/icons/EmergencyRoofing_Icon.svg'
-import RoofingReplacementIcon from '../../../public/media/icons/RoofReplacement_Icon.svg'
-import GutterServiceIcon from '../../../public/media/icons/GutterServices_Icon.svg'
-import SidingServiceIcon from '../../../public/media/icons/SidingService_Icon.svg'
-import MasonryServiceIcon from '../../../public/media/icons/MasonryService_Icon.svg'
-
-const services: ServiceCardProps[] = [
-    {
-        icon: RoofingServiceIcon,
-        title: 'Roof Service',
-        description:
-            'Expert roofing protects your home with durable, stylish installations, repairs, and replacements.',
-        link: '/learn-more'
-    },
-    {
-        icon: MasonryServiceIcon,
-        title: 'Masonry Services',
-        description:
-            'Transform your property with skilled masonry for lasting durability and timeless beauty.',
-        link: '/learn-more'
-    },
-    {
-        icon: SidingServiceIcon,
-        title: 'Siding',
-        description:
-            "Elevate your home's style and efficiency with premium siding that offers lasting protection and charm.",
-        link: '/learn-more'
-    },
-    {
-        icon: EmergencyRoofingIcon,
-        title: 'Emergency Roofing',
-        description:
-            'Rapid, reliable emergency services to protect your home and restore safety when you need it most.',
-        link: '/learn-more'
-    },
-    {
-        icon: RoofingReplacementIcon,
-        title: 'Roof Replacement',
-        description:
-            'Upgrade your home with expert roof replacement that ensures superior protection and durability.',
-        link: '/learn-more'
-    },
-    {
-        icon: GutterServiceIcon,
-        title: 'Gutter Installation',
-        description:
-            'Protect your home with custom gutters designed for flawless performance, from installation to cleaning.',
-        link: '/learn-more'
-    }
-]
-
-interface ServiceCardProps {
-    icon: any
-    title: string
-    description: string
-    link: string
-}
+import { services, ServiceCardProps } from '@/lib/services'
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
     icon,
     title,
     description,
-    link
+    link,
+    onClick
 }) => (
-    <Card className="bg-white p-6 rounded-xl">
+    <Card className="bg-white p-6 rounded-xl shadow transition-all duration-300 hover:shadow-2xl hover:scale-[1.015] hover:-translate-y-1 hover:bg-white-bright">
         <div className="space-y-4">
-            <img src={icon.src} alt={description} />
+            <img src={icon} alt={description} />
             <h3 className="text-xl font-bold text-gray-900">{title}</h3>
             <p className="text-gray-600">{description}</p>
-            <a
-                href={link}
-                className="inline-block text-red-600 hover:text-red-700"
+            <Button
+                variant="link"
+                className="text-secondary font-bold text-lg p-0 cursor-pointer"
+                onClick={() => (onClick ? onClick(link) : () => null)}
             >
                 Learn More
-            </a>
+            </Button>
         </div>
     </Card>
 )
 
 export default function ServicesBlock() {
+    const router = useRouter()
+
+    const onBaseLearnClick = () => router.push('/services')
+
+    const onServiceClick = (to: string) => router.push(to)
+
     return (
         <section className="relative h-fit py-16">
             <FullHeightBackgroundImg />
@@ -97,13 +49,19 @@ export default function ServicesBlock() {
                             everything you need to ensure your roof is durable,
                             reliable, and built to last.
                         </p>
-                        <Button variant="cta">Learn More</Button>
+                        <Button variant="cta" onClick={onBaseLearnClick}>
+                            Learn More
+                        </Button>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {services.map((service, index) => (
-                        <ServiceCard key={index} {...service} />
+                        <ServiceCard
+                            key={index}
+                            {...service}
+                            onClick={onServiceClick}
+                        />
                     ))}
                 </div>
             </div>

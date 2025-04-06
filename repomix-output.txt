@@ -36,7 +36,7 @@ Notes:
 ------
 - Some files may have been excluded based on .gitignore rules and Repomix's configuration
 - Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
-- Only files matching these patterns are included: src/components/CallToAction.tsx, src/components/ui/dialog.tsx
+- Only files matching these patterns are included: src/lib/services.ts, src/components/header/index.tsx, src/lib/navigation.ts
 - Files matching patterns in .gitignore are excluded
 - Files matching default ignore patterns are excluded
 - Files are sorted by Git change count (files with more changes are at the bottom)
@@ -49,160 +49,472 @@ Directory Structure
 ================================================================
 src/
   components/
-    ui/
-      dialog.tsx
-    CallToAction.tsx
+    header/
+      index.tsx
+  lib/
+    navigation.ts
+    services.ts
 
 ================================================================
 Files
 ================================================================
 
 ================
-File: src/components/CallToAction.tsx
+File: src/lib/navigation.ts
 ================
-import { Button } from './ui/button'
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from '@/components/ui/dialog'
-import ContactForm from './contact/ContactForm'
-import { cn } from '@/lib/utils'
+export const staticRoutes = [
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/services', label: 'Services' },
+    { path: '/privacy-policy', label: 'Privacy Policy' },
+    { path: '/faqs', label: 'FAQs' },
+    { path: '/testimonials', label: 'Testimonials' }
+]
 
-interface CtaProps {
+export interface ServiceRoute {
+    path: string
     label: string
-    buttonClass?: string
+    description: string
+    icon: string
 }
 
-export default function CallToAction({ label, buttonClass }: CtaProps) {
-    return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button variant="cta" className={cn(buttonClass)}>
-                    {label}
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
-                <DialogHeader className="text-white">
-                    <DialogTitle>Get In Touch</DialogTitle>
-                </DialogHeader>
-                <ContactForm />
-            </DialogContent>
-        </Dialog>
-    )
-}
+export const serviceRoutes: ServiceRoute[] = [
+    {
+        path: '/services/roofing-services',
+        label: 'Roofing Services',
+        description:
+            'Professional roofing installation, repair, and maintenance.',
+        icon: '/media/icons/RoofingService_Icon.svg'
+    },
+    {
+        path: '/services/gutter-services',
+        label: 'Gutter Services',
+        description:
+            'Complete gutter solutions including installation & cleaning.',
+        icon: '/media/icons/GutterServices_Icon.svg'
+    },
+    {
+        path: '/services/siding-services',
+        label: 'Siding Services',
+        description: 'Expert siding installation and repair services.',
+        icon: '/media/icons/SidingService_Icon.svg'
+    },
+    {
+        path: '/services/masonry-services',
+        label: 'Masonry Services',
+        description: 'Professional masonry work and repairs.',
+        icon: '/media/icons/MasonryService_Icon.svg'
+    },
+    {
+        path: '/services/emergency-roofing',
+        label: 'Emergency Roofing',
+        description:
+            'Rapid, reliable emergency services to protect your home and restore safety when you need it most.',
+        icon: '/media/icons/EmergencyRoofing_Icon.svg'
+    },
+    {
+        path: '/services/roof-replacement',
+        label: 'Roof Replacement',
+        description:
+            'Upgrade your home with expert roof replacement that ensures superior protection and durability.',
+        icon: '/media/icons/RoofReplacement_Icon.svg'
+    }
+]
+
+export const allRoutes = [...staticRoutes, ...serviceRoutes]
 
 ================
-File: src/components/ui/dialog.tsx
+File: src/lib/services.ts
 ================
+import { serviceRoutes } from './navigation'
+
+export interface ServiceCardProps {
+    icon: any
+    title: string
+    description: string
+    link: string
+    onClick?: (link: string) => void
+}
+export const services: ServiceCardProps[] = serviceRoutes.map(route => ({
+    icon: route.icon,
+    title: route.label,
+    description: route.description,
+    link: route.path
+}))
+
+export const servicesSubMenu = serviceRoutes.map(route => ({
+    title: route.label,
+    href: route.path,
+    description: route.description
+}))
+
+================
+File: src/components/header/index.tsx
+================
+'use client'
+
 import * as React from 'react'
-import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { X } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react'
+
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle
+} from '@/components/ui/navigation-menu'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import Logo from '../../../public/media/Craftsman_Logo.svg'
+import CallToAction from '../CallToAction'
+import { servicesSubMenu } from '@/lib/services'
 
-const Dialog = DialogPrimitive.Root
+export function Header() {
+    const router = useRouter()
+    const pathname = usePathname()
 
-const DialogTrigger = DialogPrimitive.Trigger
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+    const [isServicesOpen, setIsServicesOpen] = React.useState(false)
 
-const DialogPortal = DialogPrimitive.Portal
+    const onLogoClick = () => router.push('/')
 
-const DialogClose = DialogPrimitive.Close
+    return (
+        <header className="fixed top-0 left-0 right-0 w-full border-b bg-nav z-50">
+            <div className="max-w-[var(--max-width)] mx-auto px-6 py-4">
+                <div className="relative flex items-center justify-between">
+                    <img
+                        className="cursor-pointer"
+                        src={Logo.src}
+                        alt="craftsman_logo"
+                        onClick={onLogoClick}
+                    />
 
-const DialogOverlay = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Overlay>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-    <DialogPrimitive.Overlay
-        ref={ref}
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
-        {...props}
-    />
-))
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+                    {/* ========== Desktop Navigation ========== */}
+                    <nav className="hidden lg:block">
+                        <NavigationMenu>
+                            <NavigationMenuList className="space-x-2">
+                                {/* Home */}
+                                <NavigationMenuItem>
+                                    <Link href="/" legacyBehavior passHref>
+                                        <NavigationMenuLink
+                                            className={cn(
+                                                navigationMenuTriggerStyle(),
+                                                'nav-link',
+                                                pathname === '/' && 'active'
+                                            )}
+                                        >
+                                            Home
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
 
-const DialogContent = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-    <DialogPortal>
-        <DialogOverlay />
-        <DialogPrimitive.Content
-            ref={ref}
-            className={cn(
-                'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-primary p-6 shadow-xl duration-200 rounded-xl',
-                className
-            )}
-            {...props}
-        >
-            {children}
-            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                <X className="h-4 w-4" />
-                <span className="sr-only">Close</span>
-            </DialogPrimitive.Close>
-        </DialogPrimitive.Content>
-    </DialogPortal>
-))
-DialogContent.displayName = DialogPrimitive.Content.displayName
+                                {/* Our Company */}
+                                <NavigationMenuItem>
+                                    <Link href="/about" legacyBehavior passHref>
+                                        <NavigationMenuLink
+                                            className={cn(
+                                                navigationMenuTriggerStyle(),
+                                                'nav-link',
+                                                pathname === '/about' &&
+                                                    'active'
+                                            )}
+                                        >
+                                            Our Company
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
 
-const DialogHeader = ({
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-    <div
-        className="flex flex-col space-y-1.5 text-center text-white sm:text-left"
-        {...props}
-    />
-)
-DialogHeader.displayName = 'DialogHeader'
+                                {/* Our Projects */}
+                                <NavigationMenuItem>
+                                    <Link
+                                        href="/projects"
+                                        legacyBehavior
+                                        passHref
+                                    >
+                                        <NavigationMenuLink
+                                            className={cn(
+                                                navigationMenuTriggerStyle(),
+                                                'nav-link',
+                                                pathname === '/projects' &&
+                                                    'active'
+                                            )}
+                                        >
+                                            Our Projects
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
 
-const DialogFooter = ({
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-    <div
-        className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2"
-        {...props}
-    />
-)
-DialogFooter.displayName = 'DialogFooter'
+                                {/* ========== Services Drop-down ========== */}
+                                <NavigationMenuItem>
+                                    <NavigationMenuTrigger
+                                        className={cn(
+                                            'nav-link',
+                                            pathname.startsWith('/services/') &&
+                                                'active'
+                                        )}
+                                    >
+                                        Services
+                                    </NavigationMenuTrigger>
+                                    <NavigationMenuContent>
+                                        <ul className="grid w-[400px] gap-3 p-4">
+                                            {servicesSubMenu.map(service => {
+                                                const isActive =
+                                                    pathname === service.href
+                                                return (
+                                                    <li key={service.title}>
+                                                        <NavigationMenuLink
+                                                            asChild
+                                                        >
+                                                            <Link
+                                                                href={
+                                                                    service.href
+                                                                }
+                                                                className={cn(
+                                                                    'nav-sub-link block p-3 rounded-md',
+                                                                    isActive &&
+                                                                        'selected-sub-link'
+                                                                )}
+                                                            >
+                                                                <div className="text-md font-medium mb-1">
+                                                                    {
+                                                                        service.title
+                                                                    }
+                                                                </div>
+                                                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                                                    {
+                                                                        service.description
+                                                                    }
+                                                                </p>
+                                                            </Link>
+                                                        </NavigationMenuLink>
+                                                    </li>
+                                                )
+                                            })}
+                                        </ul>
+                                    </NavigationMenuContent>
+                                </NavigationMenuItem>
 
-const DialogTitle = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Title>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-    <DialogPrimitive.Title
-        ref={ref}
-        className="text-lg font-semibold leading-none tracking-tight"
-        {...props}
-    />
-))
-DialogTitle.displayName = DialogPrimitive.Title.displayName
+                                {/* Testimonials */}
+                                <NavigationMenuItem>
+                                    <Link
+                                        href="/testimonials"
+                                        legacyBehavior
+                                        passHref
+                                    >
+                                        <NavigationMenuLink
+                                            className={cn(
+                                                navigationMenuTriggerStyle(),
+                                                'nav-link',
+                                                pathname === '/testimonials' &&
+                                                    'active'
+                                            )}
+                                        >
+                                            Testimonials
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
 
-const DialogDescription = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Description>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-    <DialogPrimitive.Description
-        ref={ref}
-        className="text-sm text-muted-foreground"
-        {...props}
-    />
-))
-DialogDescription.displayName = DialogPrimitive.Description.displayName
+                                {/* FAQs */}
+                                <NavigationMenuItem>
+                                    <Link href="/faqs" legacyBehavior passHref>
+                                        <NavigationMenuLink
+                                            className={cn(
+                                                navigationMenuTriggerStyle(),
+                                                'nav-link',
+                                                pathname === '/faqs' && 'active'
+                                            )}
+                                        >
+                                            FAQs
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </NavigationMenuItem>
+                            </NavigationMenuList>
+                        </NavigationMenu>
+                    </nav>
 
-export {
-    Dialog,
-    DialogPortal,
-    DialogOverlay,
-    DialogClose,
-    DialogTrigger,
-    DialogContent,
-    DialogHeader,
-    DialogFooter,
-    DialogTitle,
-    DialogDescription
+                    {/* Desktop Contact Button */}
+                    <div className="hidden lg:block">
+                        <CallToAction label="Contact Us" />
+                    </div>
+
+                    {/* ========== Mobile Menu Button ========== */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="lg:hidden"
+                    >
+                        {isMobileMenuOpen ? (
+                            <X className="h-6 w-6" />
+                        ) : (
+                            <Menu className="h-6 w-6" />
+                        )}
+                    </Button>
+
+                    {/* ========== Mobile Navigation ========== */}
+                    <div
+                        className={cn(
+                            'fixed inset-x-0 top-[65px] bg-nav border-b lg:hidden',
+                            'transition-[transform,opacity] duration-300 ease-in-out',
+                            isMobileMenuOpen
+                                ? 'translate-y-0 opacity-100 pointer-events-auto'
+                                : '-translate-y-full opacity-0 pointer-events-none'
+                        )}
+                    >
+                        <nav className="max-w-[var(--max-width)] mx-auto px-6 py-4">
+                            <ul className="space-y-4">
+                                <li>
+                                    <Link
+                                        href="/"
+                                        className={cn(
+                                            'nav-sub-link block py-2 px-4 text-lg rounded-md w-fit',
+                                            pathname === '/' &&
+                                                'selected-sub-link'
+                                        )}
+                                        onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                        }
+                                    >
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/about"
+                                        className={cn(
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
+                                            pathname === '/about' &&
+                                                'selected-sub-link'
+                                        )}
+                                        onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                        }
+                                    >
+                                        Our Company
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/projects"
+                                        className={cn(
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
+                                            pathname === '/projects' &&
+                                                'selected-sub-link'
+                                        )}
+                                        onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                        }
+                                    >
+                                        Our Projects
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() =>
+                                            setIsServicesOpen(!isServicesOpen)
+                                        }
+                                        className="flex items-center justify-between w-[14rem] text-lg nav-sub-link py-2 px-4 rounded-md"
+                                    >
+                                        Services
+                                        <ChevronUp
+                                            className={cn(
+                                                'h-4 w-4 transition-transform duration-200',
+                                                isServicesOpen && 'rotate-180'
+                                            )}
+                                        />
+                                    </button>
+                                    <div
+                                        className={cn(
+                                            'grid transition-[grid-template-rows,opacity] duration-200 ease-in-out',
+                                            isServicesOpen
+                                                ? 'grid-rows-[1fr] opacity-100'
+                                                : 'grid-rows-[0fr] opacity-0'
+                                        )}
+                                    >
+                                        <div className="overflow-hidden">
+                                            <ul className="pl-4 py-2 space-y-2">
+                                                {servicesSubMenu.map(
+                                                    service => {
+                                                        const isActive =
+                                                            pathname ===
+                                                            service.href
+                                                        return (
+                                                            <li
+                                                                key={
+                                                                    service.title
+                                                                }
+                                                            >
+                                                                <Link
+                                                                    href={
+                                                                        service.href
+                                                                    }
+                                                                    className={cn(
+                                                                        'nav-sub-link block p-2 text-sm rounded-md w-fit',
+                                                                        isActive &&
+                                                                            'selected-sub-link'
+                                                                    )}
+                                                                    onClick={() =>
+                                                                        setIsMobileMenuOpen(
+                                                                            false
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        service.title
+                                                                    }
+                                                                </Link>
+                                                            </li>
+                                                        )
+                                                    }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/testimonials"
+                                        className={cn(
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
+                                            pathname === '/testimonials' &&
+                                                'selected-sub-link'
+                                        )}
+                                        onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                        }
+                                    >
+                                        Testimonials
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/faqs"
+                                        className={cn(
+                                            'nav-sub-link block text-lg rounded-md w-fit py-2 px-4 ',
+                                            pathname === '/faqs' &&
+                                                'selected-sub-link'
+                                        )}
+                                        onClick={() =>
+                                            setIsMobileMenuOpen(false)
+                                        }
+                                    >
+                                        FAQs
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Button variant="cta">Contact Us</Button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    )
 }
 
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import FullHeightBackgroundImg from './backgroundLayer/FullHeightBackgroundImg'
+import { RoofPageBreak } from './backgroundLayer'
 
 const WhyUs = () => {
     return (
-        <section className="relative py-24">
+        <section className="relative pt-24">
             <FullHeightBackgroundImg />
             <div className="max-w-[var(--max-width)] mx-auto px-4">
                 <div className="grid lg:grid-cols-2 gap-12 items-center relative">
@@ -49,31 +50,44 @@ const WhyUs = () => {
                         </div>
                     </div>
 
-                    {/* Right Column - Image Grid */}
-                    <div className="relative h-[500px] hidden lg:block">
-                        {/* Top small square image */}
-                        <div className="absolute top-0 right-0 w-32 h-32 rounded-lg overflow-hidden shadow-lg">
+                    <div className="relative hidden lg:block h-[500px] w-full p-4">
+                        {/* Background pattern - optional */}
+                        <div className="absolute inset-0 bg-navy-800 -z-10">
+                            {/* You could add a pattern here if desired */}
+                        </div>
+
+                        {/* Logo (top left) */}
+                        <div className="absolute top-4 left-4 w-16 h-16 shadow-lg p-1 z-30">
                             <img
-                                src="https://images.unsplash.com/photo-1739641375724-dfea74e0df69?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Company icon"
+                                src="/media/roofing-badge.png"
+                                alt="Logo"
+                                className="w-full h-full object-contain rounded-xl"
+                            />
+                        </div>
+
+                        {/* Top Roof Image (Main angled piece) */}
+                        <div className="absolute top-4 left-24 right-4 h-[250px] rounded-lg overflow-hidden shadow-lg z-10">
+                            <img
+                                src="/media/home/RoofHouse.png"
+                                alt="Roof Close-up"
                                 className="w-full h-full object-cover"
                             />
                         </div>
 
-                        {/* Main center image */}
-                        <div className="absolute top-1/2 left-0 transform -translate-y-1/2 w-[400px] h-[300px] rounded-lg overflow-hidden shadow-lg z-10">
+                        {/* Left House Image */}
+                        <div className="absolute bottom-4 left-4 w-[280px] h-[220px] rounded-lg overflow-hidden shadow-lg z-20">
                             <img
-                                src="https://images.unsplash.com/photo-1739641375724-dfea74e0df69?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Modern house exterior"
+                                src="/media/home/BrickHouseFront.png"
+                                alt="Left house"
                                 className="w-full h-full object-cover"
                             />
                         </div>
 
-                        {/* Bottom right image */}
-                        <div className="absolute bottom-0 right-0 w-[350px] h-[200px] rounded-lg overflow-hidden shadow-lg">
+                        {/* Bottom Right House with Garage */}
+                        <div className="absolute bottom-4 right-4 w-[400px] h-[220px] rounded-lg overflow-hidden shadow-lg z-10">
                             <img
-                                src="https://images.unsplash.com/photo-1739641375724-dfea74e0df69?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="House with garage"
+                                src="/media/home/GrayHouseFront.png"
+                                alt="Right house"
                                 className="w-full h-full object-cover"
                             />
                         </div>
@@ -98,6 +112,7 @@ const WhyUs = () => {
                     </div>
                 </div>
             </div>
+            <RoofPageBreak />
         </section>
     )
 }

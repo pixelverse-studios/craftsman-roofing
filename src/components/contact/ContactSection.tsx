@@ -21,19 +21,16 @@ const features = [
     }
 ]
 
-// const ratings = [
-//     { logo: '/api/placeholder/32/32', rating: '5.0' },
-//     { logo: '/api/placeholder/32/32', rating: '4.8' },
-//     { logo: '/api/placeholder/32/32', rating: '5.0' },
-//     { logo: '/api/placeholder/32/32', rating: '5.0' }
-// ]
-
 const ContactSection = () => {
     return (
-        <section className="relative min-h-screen bg-[#0A0F29]">
-            {/* Background with overlay */}
-            <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] bg-cover bg-center">
-                <div className="absolute inset-0 bg-[#0A0F29]/90" />
+        <section className="relative h-fit bg-primary">
+            <div
+                style={{
+                    backgroundImage: 'url("/media/contact-bg.png")'
+                }}
+                className={`absolute inset-0 bg-cover bg-center bg-primary`}
+            >
+                <div className="absolute inset-0 bg-blue-950 opacity-75" />
             </div>
 
             {/* Content */}
@@ -41,7 +38,7 @@ const ContactSection = () => {
                 <div className="max-w-[var(--max-width)] mx-auto px-4 py-16">
                     <div className="grid lg:grid-cols-2 gap-8 items-start">
                         {/* Left Column */}
-                        <div className="text-white space-y-8">
+                        <div className="text-white space-y-8 bg-primary h-full p-6 rounded-xl">
                             <div className="space-y-4">
                                 <h2 className="text-3xl md:text-4xl font-bold">
                                     Get started in{' '}
@@ -75,6 +72,11 @@ const ContactSection = () => {
                                     </li>
                                 ))}
                             </ul>
+                            <img
+                                src="/media/Craftsman_Logo.svg"
+                                alt="logo"
+                                className="h-full w-auto max-h-[20vh] mx-auto my-6"
+                            />
 
                             {/* <div className="border-t border-gray-800 pt-8">
                                 <div className="flex flex-wrap items-center gap-6">
@@ -98,7 +100,7 @@ const ContactSection = () => {
                         </div>
 
                         {/* Right Column */}
-                        <Card className="bg-[#0A0F29] border-gray-800">
+                        <Card className="bg-primary border-gray-800">
                             <CardHeader>
                                 <CardTitle className="text-2xl text-white">
                                     Let's start your project
