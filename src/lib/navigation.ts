@@ -1,10 +1,9 @@
 export const staticRoutes = [
     { path: '/', label: 'Home' },
-    { path: '/about', label: 'About' },
+    { path: '/about', label: 'Our Company' },
     { path: '/services', label: 'Services' },
-    { path: '/privacy-policy', label: 'Privacy Policy' },
-    { path: '/faqs', label: 'FAQs' },
-    { path: '/testimonials', label: 'Testimonials' }
+    { path: '/faqs', label: 'FAQs' }
+    // { path: '/testimonials', label: 'Testimonials' }
 ]
 
 export interface ServiceRoute {
@@ -57,4 +56,8 @@ export const serviceRoutes: ServiceRoute[] = [
     }
 ]
 
-export const allRoutes = [...staticRoutes, ...serviceRoutes]
+export const resourceRoutes = [
+    { path: '/privacy-policy', label: 'Privacy Policy' }
+]
+
+export const allRoutes = [...staticRoutes, ...serviceRoutes, ...resourceRoutes]

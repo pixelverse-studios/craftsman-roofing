@@ -64,10 +64,10 @@
         margin-top: 5rem;
     }
     h1 {
-        @apply font-semibold text-[42px] leading-tight;
+        @apply font-bold text-[42px] leading-tight;
     }
     h2 {
-        @apply font-normal text-[24px] leading-normal;
+        @apply font-bold text-[24px] leading-normal;
     }
 
     p {

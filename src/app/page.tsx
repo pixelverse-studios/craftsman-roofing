@@ -9,6 +9,8 @@ import ProjectsGallery from '@/components/gallery/GalleryLayout'
 import CtaSection from '@/components/cta/CtaSection'
 import WhyUs from '@/components/WhyUs'
 import ContactBanner from '@/components/home/ContactBanner'
+import FaqGroup from '@/components/faqs/FaqGroup'
+import { generalFAQs } from '@/lib/faqs'
 
 export default function HomePage() {
     return (
@@ -20,7 +22,9 @@ export default function HomePage() {
             <WhyUs />
             <ProjectsGallery />
             <CtaSection />
-            <FAQSection />
+            <FAQSection>
+                <FaqGroup faqs={generalFAQs} title="" />
+            </FAQSection>
             <ContactSection />
         </main>
     )
