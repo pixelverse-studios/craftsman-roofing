@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
-import FullHeightBackgroundImg from '../backgroundLayer/FullHeightBackgroundImg'
+import { FullHeightBackgroundImg } from '../backgroundLayer'
 import { services, ServiceCardProps } from '@/lib/services'
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -28,7 +28,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     </Card>
 )
 
-export default function ServicesBlock() {
+interface ServicesBlockProps {
+    routeToServices: boolean
+}
+
+export default function ServicesBlock({ routeToServices }: ServicesBlockProps) {
     const router = useRouter()
 
     const onBaseLearnClick = () => router.push('/services')
@@ -49,9 +53,11 @@ export default function ServicesBlock() {
                             everything you need to ensure your roof is durable,
                             reliable, and built to last.
                         </p>
-                        <Button variant="cta" onClick={onBaseLearnClick}>
-                            Learn More
-                        </Button>
+                        {routeToServices ? (
+                            <Button variant="cta" onClick={onBaseLearnClick}>
+                                Learn More
+                            </Button>
+                        ) : null}
                     </div>
                 </div>
 

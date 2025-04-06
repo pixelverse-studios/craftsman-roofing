@@ -1,5 +1,5 @@
+export const homeRoute = { path: '/', label: 'Home' }
 export const staticRoutes = [
-    { path: '/', label: 'Home' },
     { path: '/about', label: 'Our Company' },
     { path: '/services', label: 'Services' },
     { path: '/faqs', label: 'FAQs' }

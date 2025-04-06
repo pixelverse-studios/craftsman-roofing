@@ -64,7 +64,7 @@
         margin-top: 5rem;
     }
     h1 {
-        @apply font-bold text-[42px] leading-tight;
+        @apply font-bold text-[42px] leading-tight max-w-3xl;
     }
     h2 {
         @apply font-bold text-[24px] leading-normal;

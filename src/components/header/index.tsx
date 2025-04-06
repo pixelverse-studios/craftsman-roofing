@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/navigation-menu'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import Logo from '../../../public/media/Craftsman_Logo.svg'
 import CallToAction from '../CallToAction'
 
 import { staticRoutes } from '@/lib/navigation'
@@ -37,7 +36,7 @@ export function Header() {
                 <div className="relative flex items-center justify-between">
                     <img
                         className="cursor-pointer"
-                        src={Logo.src}
+                        src="/media/Craftsman_Logo.svg"
                         alt="craftsman_logo"
                         onClick={onLogoClick}
                     />
@@ -67,7 +66,7 @@ export function Header() {
                                                     </NavigationMenuTrigger>
                                                 </Link>
                                                 <NavigationMenuContent>
-                                                    <ul className="grid w-[400px] gap-3 p-4">
+                                                    <ul className="grid w-[300px] gap-3 p-4">
                                                         {servicesSubMenu.map(
                                                             service => {
                                                                 const isActive =

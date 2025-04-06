@@ -1,4 +1,4 @@
-import ServiceCard from '../home/ServiceCard'
+import ServiceCard from './ServiceCard'
 import CallToAction from '../CallToAction'
 
 const services = [
@@ -36,7 +36,7 @@ export default function HomeHeroSection() {
                 <div className="absolute inset-0" />
             </div>
 
-            <div className="relative max-w-[var(--max-width)] mx-auto pt-24 px-4">
+            <div className="relative max-w-custom mx-auto pt-24 px-4">
                 <div className="text-center text-white space-y-6">
                     <h1 className="text-5xl md:text-5xl font-bold max-w-4xl mx-auto">
                         Built to Protect, Designed to Last
