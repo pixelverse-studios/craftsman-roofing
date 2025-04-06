@@ -8,11 +8,13 @@ import ContactSection from '@/components/contact/ContactSection'
 import ProjectsGallery from '@/components/gallery/GalleryLayout'
 import CtaSection from '@/components/cta/CtaSection'
 import WhyUs from '@/components/WhyUs'
+import ContactBanner from '@/components/home/ContactBanner'
 
 export default function HomePage() {
     return (
         <main>
             <HomeHeroSection />
+            <ContactBanner />
             <ServicesBlock />
             <TestimonialsCarousel />
             <WhyUs />

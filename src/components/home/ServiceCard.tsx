@@ -18,7 +18,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             <a href={href} className="flex items-center gap-4 relative">
                 {/* Icon container */}
                 <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center">
-                    <img src={icon.src} alt={icon.src} />
+                    <img src={icon} alt={icon.src} />
                     {/* <span className="text-red-600">{icon}</span> */}
                 </div>
 

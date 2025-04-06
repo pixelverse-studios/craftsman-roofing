@@ -36,7 +36,7 @@ Notes:
 ------
 - Some files may have been excluded based on .gitignore rules and Repomix's configuration
 - Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
-- Only files matching these patterns are included: src/components/contact/ContactForm.tsx, src/lib/hooks/usePlacesAutocomplete.ts
+- Only files matching these patterns are included: src/components/CallToAction.tsx, src/components/ui/dialog.tsx
 - Files matching patterns in .gitignore are excluded
 - Files matching default ignore patterns are excluded
 - Files are sorted by Git change count (files with more changes are at the bottom)
@@ -49,365 +49,161 @@ Directory Structure
 ================================================================
 src/
   components/
-    contact/
-      ContactForm.tsx
-  lib/
-    hooks/
-      usePlacesAutocomplete.ts
+    ui/
+      dialog.tsx
+    CallToAction.tsx
 
 ================================================================
 Files
 ================================================================
 
 ================
-File: src/lib/hooks/usePlacesAutocomplete.ts
+File: src/components/CallToAction.tsx
 ================
-import { useState, useEffect } from 'react'
-
-export const usePlaceAutocomplete = (input: string) => {
-    const [results, setResults] = useState<any[]>([])
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        if (!input) {
-            setResults([])
-            return
-        }
-
-        const timeout = setTimeout(async () => {
-            setLoading(true)
-            const params = new URLSearchParams({
-                input,
-                key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-                types: 'address',
-                components: 'country:us'
-            })
-
-            const res = await fetch(
-                `https://maps.googleapis.com/maps/api/place/autocomplete/json?${params}`
-            )
-
-            const data = await res.json()
-            setResults(data.predictions || [])
-            setLoading(false)
-        }, 300) // debounce input
-
-        return () => clearTimeout(timeout)
-    }, [input])
-
-    return { results, loading }
-}
-
-================
-File: src/components/contact/ContactForm.tsx
-================
-'use client'
-
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
-import usePlacesAutocomplete, {
-    getGeocode,
-    getDetails
-} from 'use-places-autocomplete'
-
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from './ui/button'
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from '@/components/ui/select'
-import { Checkbox } from '@/components/ui/checkbox'
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from '@/components/ui/dialog'
+import ContactForm from './contact/ContactForm'
 import { cn } from '@/lib/utils'
 
-interface ContactFormProps {
-    className?: string
-    showServiceSelect?: boolean
-    submitLabel?: string
-    onSubmit?: (data: any) => void
+interface CtaProps {
+    label: string
+    buttonClass?: string
 }
 
-const formSchema = z.object({
-    fullName: z.string().min(1, 'Full name is required'),
-    email: z.string().email(),
-    phone: z
-        .string()
-        .min(10, 'Phone number must be at least 10 digits')
-        .regex(/^\d+$/, 'Phone number must contain only numbers'),
-    address: z.string().min(1),
-    city: z.string().min(1),
-    state: z.string().min(1),
-    zip: z
-        .string()
-        .min(5, 'ZIP must be at least 5 digits')
-        .regex(/^\d+$/, 'ZIP code must contain only numbers'),
-    service: z.string().optional(),
-    privacy: z.boolean().refine(val => val, {
-        message: 'You must agree to the privacy policy'
-    })
-})
-
-type FormData = z.infer<typeof formSchema>
-
-export const ContactForm: React.FC<ContactFormProps> = ({
-    className,
-    showServiceSelect = true,
-    submitLabel = 'Submit',
-    onSubmit
-}) => {
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors }
-    } = useForm<FormData>({
-        resolver: zodResolver(formSchema),
-        mode: 'onChange'
-    })
-
-    const {
-        ready,
-        value,
-        suggestions: { status, data },
-        setValue: setAutocompleteValue,
-        clearSuggestions
-    } = usePlacesAutocomplete({
-        requestOptions: {
-            componentRestrictions: { country: 'us' }
-        },
-        debounce: 300
-    })
-
-    const handleAddressSelect = async (description: string) => {
-        setAutocompleteValue(description, false)
-        setValue('address', description)
-        clearSuggestions()
-
-        const results = await getGeocode({ address: description })
-
-        console.log('results: ', results)
-        console.log('description: ', description)
-        const place = results[0]
-
-        const components: Record<string, string> = {}
-        place.address_components.forEach(comp => {
-            const type = comp.types[0]
-            components[type] = comp.long_name
-        })
-
-        setValue('city', components.locality || '')
-        setValue('state', components.administrative_area_level_1 || '')
-        setValue('zip', components.postal_code || '')
-    }
-
-    const submitHandler = (data: FormData) => {
-        onSubmit?.(data)
-    }
-
-    if (!ready) return <span></span>
-
+export default function CallToAction({ label, buttonClass }: CtaProps) {
     return (
-        <form
-            onSubmit={handleSubmit(submitHandler)}
-            className={cn('space-y-6 bg-primary', className)}
-        >
-            <div className="space-y-2">
-                <Label htmlFor="fullName" className="text-white">
-                    Full name
-                </Label>
-                <Input
-                    id="fullName"
-                    {...register('fullName')}
-                    placeholder="Full name"
-                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                />
-                {errors.fullName && (
-                    <p className="text-secondary text-sm">
-                        {errors.fullName.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <Label htmlFor="email" className="text-white">
-                        Email
-                    </Label>
-                    <Input
-                        id="email"
-                        {...register('email')}
-                        placeholder="you@company.com"
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                    />
-                    {errors.email && (
-                        <p className="text-secondary text-sm">
-                            {errors.email.message}
-                        </p>
-                    )}
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-white">
-                        Phone number
-                    </Label>
-                    <Input
-                        id="phone"
-                        {...register('phone')}
-                        placeholder="+1 (555) 000-0000"
-                        className="text-white bg-gray-800 border-gray-700 placeholder:text-gray-400"
-                    />
-                    {errors.phone && (
-                        <p className="text-secondary text-sm">
-                            {errors.phone.message}
-                        </p>
-                    )}
-                </div>
-            </div>
-
-            <div className="space-y-2 relative z-50">
-                <Label htmlFor="address" className="text-white">
-                    Street Address
-                </Label>
-                <Input
-                    id="address"
-                    placeholder="123 Main St"
-                    className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                    value={value}
-                    onChange={e => {
-                        setAutocompleteValue(e.target.value)
-                    }}
-                />
-                {status === 'OK' && ready && (
-                    <ul className="absolute mt-1 w-full bg-gray-800 text-white shadow-lg rounded-lg z-50 border border-gray-200 max-h-60 overflow-auto">
-                        {data.map(({ place_id, description }) => (
-                            <li
-                                key={place_id}
-                                onClick={() => handleAddressSelect(description)}
-                                className="px-4 py-2 hover:bg-gray-100 text-white hover:text-black cursor-pointer text-sm"
-                            >
-                                {description}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-                {errors.address && (
-                    <p className="text-secondary text-sm">
-                        {errors.address.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                    <Label htmlFor="city" className="text-white">
-                        City
-                    </Label>
-                    <Input
-                        id="city"
-                        {...register('city')}
-                        placeholder="City"
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                    />
-                    {errors.city && (
-                        <p className="text-secondary text-sm">
-                            {errors.city.message}
-                        </p>
-                    )}
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="state" className="text-white">
-                        State
-                    </Label>
-                    <Input
-                        id="state"
-                        {...register('state')}
-                        placeholder="State"
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                    />
-                    {errors.state && (
-                        <p className="text-secondary text-sm">
-                            {errors.state.message}
-                        </p>
-                    )}
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="zip" className="text-white">
-                        ZIP
-                    </Label>
-                    <Input
-                        id="zip"
-                        {...register('zip')}
-                        placeholder="ZIP"
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"
-                    />
-                    {errors.zip && (
-                        <p className="text-secondary text-sm">
-                            {errors.zip.message}
-                        </p>
-                    )}
-                </div>
-            </div>
-
-            {showServiceSelect && (
-                <div className="space-y-2">
-                    <Label htmlFor="service" className="text-white">
-                        Service needed
-                    </Label>
-                    <Select onValueChange={value => setValue('service', value)}>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
-                            <SelectValue placeholder="Select a service" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                            <SelectItem value="roofing">Roofing</SelectItem>
-                            <SelectItem value="siding">Siding</SelectItem>
-                            <SelectItem value="gutters">Gutters</SelectItem>
-                            <SelectItem value="masonry">Masonry</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-            )}
-
-            <div className="flex items-center space-x-2">
-                <Checkbox
-                    id="privacy"
-                    {...register('privacy')}
-                    className="border-gray-700 bg-gray-800 data-[state=checked]:bg-red-600 data-[state=checked]:border-red-600"
-                />
-                <Label
-                    htmlFor="privacy"
-                    className="text-sm leading-none text-white"
-                >
-                    You agree to our friendly{' '}
-                    <a
-                        href="/privacy-policy"
-                        className="text-red-600 hover:underline"
-                    >
-                        privacy policy
-                    </a>
-                    .
-                </Label>
-            </div>
-            {errors.privacy && (
-                <p className="text-secondary text-sm">
-                    {errors.privacy.message}
-                </p>
-            )}
-
-            <Button
-                type="submit"
-                className="w-full bg-red-700 hover:bg-red-800 text-white"
-            >
-                {submitLabel}
-            </Button>
-        </form>
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="cta" className={cn(buttonClass)}>
+                    {label}
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+                <DialogHeader className="text-white">
+                    <DialogTitle>Get In Touch</DialogTitle>
+                </DialogHeader>
+                <ContactForm />
+            </DialogContent>
+        </Dialog>
     )
 }
 
-export default ContactForm
+================
+File: src/components/ui/dialog.tsx
+================
+import * as React from 'react'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+const Dialog = DialogPrimitive.Root
+
+const DialogTrigger = DialogPrimitive.Trigger
+
+const DialogPortal = DialogPrimitive.Portal
+
+const DialogClose = DialogPrimitive.Close
+
+const DialogOverlay = React.forwardRef<
+    React.ElementRef<typeof DialogPrimitive.Overlay>,
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+    <DialogPrimitive.Overlay
+        ref={ref}
+        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+        {...props}
+    />
+))
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+
+const DialogContent = React.forwardRef<
+    React.ElementRef<typeof DialogPrimitive.Content>,
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+    <DialogPortal>
+        <DialogOverlay />
+        <DialogPrimitive.Content
+            ref={ref}
+            className={cn(
+                'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-primary p-6 shadow-xl duration-200 rounded-xl',
+                className
+            )}
+            {...props}
+        >
+            {children}
+            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+            </DialogPrimitive.Close>
+        </DialogPrimitive.Content>
+    </DialogPortal>
+))
+DialogContent.displayName = DialogPrimitive.Content.displayName
+
+const DialogHeader = ({
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+    <div
+        className="flex flex-col space-y-1.5 text-center text-white sm:text-left"
+        {...props}
+    />
+)
+DialogHeader.displayName = 'DialogHeader'
+
+const DialogFooter = ({
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+    <div
+        className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2"
+        {...props}
+    />
+)
+DialogFooter.displayName = 'DialogFooter'
+
+const DialogTitle = React.forwardRef<
+    React.ElementRef<typeof DialogPrimitive.Title>,
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+    <DialogPrimitive.Title
+        ref={ref}
+        className="text-lg font-semibold leading-none tracking-tight"
+        {...props}
+    />
+))
+DialogTitle.displayName = DialogPrimitive.Title.displayName
+
+const DialogDescription = React.forwardRef<
+    React.ElementRef<typeof DialogPrimitive.Description>,
+    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+    <DialogPrimitive.Description
+        ref={ref}
+        className="text-sm text-muted-foreground"
+        {...props}
+    />
+))
+DialogDescription.displayName = DialogPrimitive.Description.displayName
+
+export {
+    Dialog,
+    DialogPortal,
+    DialogOverlay,
+    DialogClose,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogFooter,
+    DialogTitle,
+    DialogDescription
+}
 
 
 

@@ -21,12 +21,12 @@ const features = [
     }
 ]
 
-const ratings = [
-    { logo: '/api/placeholder/32/32', rating: '5.0' },
-    { logo: '/api/placeholder/32/32', rating: '4.8' },
-    { logo: '/api/placeholder/32/32', rating: '5.0' },
-    { logo: '/api/placeholder/32/32', rating: '5.0' }
-]
+// const ratings = [
+//     { logo: '/api/placeholder/32/32', rating: '5.0' },
+//     { logo: '/api/placeholder/32/32', rating: '4.8' },
+//     { logo: '/api/placeholder/32/32', rating: '5.0' },
+//     { logo: '/api/placeholder/32/32', rating: '5.0' }
+// ]
 
 const ContactSection = () => {
     return (
@@ -76,7 +76,7 @@ const ContactSection = () => {
                                 ))}
                             </ul>
 
-                            <div className="border-t border-gray-800 pt-8">
+                            {/* <div className="border-t border-gray-800 pt-8">
                                 <div className="flex flex-wrap items-center gap-6">
                                     {ratings.map((rating, index) => (
                                         <div
@@ -94,7 +94,7 @@ const ContactSection = () => {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Right Column */}

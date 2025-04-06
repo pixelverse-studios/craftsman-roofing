@@ -1,7 +1,7 @@
-import Script from 'next/script'
 import { Sora } from 'next/font/google'
 import { Header } from '@/components/header'
 import Footer from '@/components/footer/Footer'
+import { Toaster } from 'sonner'
 
 import './globals.css'
 
@@ -54,16 +54,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${sora.variable}`}>
-            <head>
-                <Script
-                    src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=beta&loading=async`}
-                    strategy="afterInteractive"
-                />
-            </head>
+            <head></head>
             <body className="font-sora">
                 <Header />
                 {children}
                 <Footer />
+                <Toaster />
             </body>
         </html>
     )
