@@ -15,6 +15,7 @@ export interface ButtonProps
         | 'link'
         | 'primary'
         | 'cta'
+        | 'cta-invert'
     size?: 'default' | 'sm' | 'lg' | 'icon'
 }
 
@@ -30,6 +31,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     // Then variant classes
                     {
                         'btn-cta': variant === 'cta',
+                        'btn-cta-invert': variant === 'cta-invert',
                         'btn-default': variant === 'default',
                         'btn-destructive': variant === 'destructive',
                         'btn-outline': variant === 'outline',

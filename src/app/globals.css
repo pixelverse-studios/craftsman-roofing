@@ -60,14 +60,22 @@
     }
     main {
         min-height: calc(100dvh - 5rem);
-        height: fit-content;
-        margin-top: 5rem;
+
+        @apply mt-[5rem] h-fit bg-white z-0 relative;
     }
     h1 {
         @apply font-bold text-[42px] leading-tight max-w-3xl;
     }
     h2 {
-        @apply font-bold text-[24px] leading-normal;
+        @apply font-bold text-[32px] leading-normal;
+    }
+
+    h3 {
+        @apply font-semibold text-[24px];
+    }
+
+    h4 {
+        @apply font-semibold text-[20px];
     }
 
     p {
@@ -90,6 +98,12 @@
         /* optionally: */
         border-radius: 0.375rem;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    em {
+        text-decoration: none;
+        font-style: normal;
+        font-weight: bold;
     }
 }
 
@@ -197,6 +211,10 @@
     .btn-cta:hover {
         background-color: var(--secondary-foreground);
         color: var(--secondary);
+    }
+    /* CTA Variant */
+    .btn-cta-invert {
+        @apply text-secondary bg-white border-white hover:bg-secondary hover:text-white px-6 py-3 border-2 transition-all duration-200;
     }
 }
 

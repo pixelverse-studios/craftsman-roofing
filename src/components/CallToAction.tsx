@@ -12,13 +12,21 @@ import { cn } from '@/lib/utils'
 interface CtaProps {
     label: string
     buttonClass?: string
+    buttonVariant?: boolean
 }
 
-export default function CallToAction({ label, buttonClass }: CtaProps) {
+export default function CallToAction({
+    label,
+    buttonClass,
+    buttonVariant
+}: CtaProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="cta" className={cn(buttonClass)}>
+                <Button
+                    variant={buttonVariant ? 'cta-invert' : 'cta'}
+                    className={cn(buttonClass)}
+                >
                     {label}
                 </Button>
             </DialogTrigger>
