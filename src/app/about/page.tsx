@@ -15,7 +15,7 @@ export default function AboutPage() {
             <AboutHeroSection />
             <OurCompany />
             <TestimonialsCarousel />
-            <ServicesBlock />
+            <ServicesBlock routeToServices />
             <FAQSection>
                 <FaqGroup faqs={generalFAQs} title="General" />
             </FAQSection>
