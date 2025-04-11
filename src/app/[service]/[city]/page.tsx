@@ -32,29 +32,31 @@ export default function LocalizedServicePage({ params }: { params: Params }) {
     if (!service || !city) return notFound()
 
     return (
-        <section className="max-w-3xl mx-auto px-4 py-12">
-            <div className="mb-6">
-                <h1 className="text-4xl font-bold">
-                    {service.title} in {city.name}
-                </h1>
-                <p className="text-lg mt-2 text-muted-foreground">
-                    {service.description} Available throughout {city.name}.
-                </p>
-            </div>
+        <main>
+            <section className="max-w-3xl mx-auto px-4 py-12">
+                <div className="mb-6">
+                    <h1 className="text-4xl font-bold">
+                        {service.title} in {city.name}
+                    </h1>
+                    <p className="text-lg mt-2 text-muted-foreground">
+                        {service.description} Available throughout {city.name}.
+                    </p>
+                </div>
 
-            <div className="mt-6">
-                <img
-                    src={service.icon}
-                    alt={`${service.title} icon`}
-                    className="w-12 h-12 mb-4"
-                />
-                <p>
-                    Craftsman Roofing proudly provides{' '}
-                    {service.title.toLowerCase()} services in {city.name} and
-                    the surrounding region. Contact us today to schedule your
-                    free inspection.
-                </p>
-            </div>
-        </section>
+                <div className="mt-6">
+                    <img
+                        src={service.icon}
+                        alt={`${service.title} icon`}
+                        className="w-12 h-12 mb-4"
+                    />
+                    <p>
+                        Craftsman Roofing proudly provides{' '}
+                        {service.title.toLowerCase()} services in {city.name}{' '}
+                        and the surrounding region. Contact us today to schedule
+                        your free inspection.
+                    </p>
+                </div>
+            </section>
+        </main>
     )
 }
