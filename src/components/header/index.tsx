@@ -65,8 +65,8 @@ export function Header() {
                                                         {label}
                                                     </NavigationMenuTrigger>
                                                 </Link>
-                                                <NavigationMenuContent>
-                                                    <ul className="grid w-[300px] gap-3 p-4">
+                                                <NavigationMenuContent className="min-w-[500px] max-w-[90vw]">
+                                                    <ul className="grid gap-3 p-4 w-full">
                                                         {servicesSubMenu.map(
                                                             service => {
                                                                 const isActive =
@@ -75,7 +75,7 @@ export function Header() {
                                                                 return (
                                                                     <li
                                                                         key={
-                                                                            service.title
+                                                                            service.href
                                                                         }
                                                                     >
                                                                         <NavigationMenuLink
@@ -171,7 +171,7 @@ export function Header() {
                                 {staticRoutes.map(({ path, label }) => {
                                     if (label === 'Services') {
                                         return (
-                                            <li>
+                                            <li key={label}>
                                                 <button
                                                     onClick={() =>
                                                         setIsServicesOpen(
@@ -207,7 +207,7 @@ export function Header() {
                                                                     return (
                                                                         <li
                                                                             key={
-                                                                                service.title
+                                                                                service.href
                                                                             }
                                                                         >
                                                                             <Link

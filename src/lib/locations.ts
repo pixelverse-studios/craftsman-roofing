@@ -14,3 +14,5 @@ export const cities = [
 export function getCityBySlug(slug: string) {
     return cities.find(city => city.slug === slug)
 }
+
+export const counties = []

@@ -12,14 +12,14 @@ interface FAQItem {
 }
 interface FAQSectionProps {
     faqs: FAQItem[]
-    title: string
+    title?: string
 }
 
 export default function FaqGroup({ faqs, title }: FAQSectionProps) {
     return (
         <section className="p-8">
             <h2
-                className={`mx-auto text-center mb-6 ${title === '' ? 'hidden' : ''}`}
+                className={`mx-auto text-center mb-6 ${title == undefined ? 'hidden' : ''}`}
             >
                 {title}
             </h2>

@@ -105,6 +105,10 @@
         font-style: normal;
         font-weight: bold;
     }
+
+    .icon-row {
+        @apply grid grid-cols-[2rem_1fr] gap-4;
+    }
 }
 
 /* Custom utilities */
